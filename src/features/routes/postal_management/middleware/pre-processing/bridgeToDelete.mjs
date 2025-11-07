@@ -6,7 +6,7 @@ import Blogs from '../../../../models/postal_model.mjs'
 // helper
 import { __file_remove } from "../../../../../helpers/__file_remove.mjs";
 
-export const beforeToDelete = async ( req, res, next ) => {
+export const bridgeToDelete = async ( req, res, next ) => {
 
     try {
 

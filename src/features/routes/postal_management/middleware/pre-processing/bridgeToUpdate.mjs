@@ -6,7 +6,7 @@ import { __file_remove } from "../../../../../helpers/__file_remove.mjs";
 // Model
 import Blogs from '../../../../models/postal_model.mjs'
 
-export const beforeToUpdate = async ( req, res, next ) => {
+export const bridgeToUpdate = async ( req, res, next ) => {
 
     const id = req.params.id // id data
     let thumbnailPaths = [] // empy array

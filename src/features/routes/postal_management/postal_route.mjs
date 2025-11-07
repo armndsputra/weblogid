@@ -14,29 +14,29 @@ import {
 import { upload } from './helpers/_set_multer.mjs';
 
 // Local middleware
-import { beforeToDatabase } from './middleware/pre-processing/beforeToDatabase.mjs'
-import { beforeToUpdate } from  './middleware/pre-processing/beforeToUpdate.mjs'
-import { beforeToDelete } from './middleware/pre-processing/beforeToDelete.mjs'
-import { beforeFetchDataByID } from './middleware/pre-processing/beforeToFetchDataByID.mjs'
-import { beforeFetchDataByKeywords} from './middleware/pre-processing/beforeToFetchDataByKeywords.mjs'
+import { bridgeToDatabase } from './middleware/pre-processing/bridgeToDatabase.mjs'
+import { bridgeToUpdate } from  './middleware/pre-processing/bridgeToUpdate.mjs'
+import { bridgeToDelete } from './middleware/pre-processing/bridgeToDelete.mjs'
+import { bridgeFetchDataByID } from './middleware/pre-processing/bridgeToFetchDataByID.mjs'
+import { bridgeFetchDataByKeywords} from './middleware/pre-processing/bridgeToFetchDataByKeywords.mjs'
 
 // fetch all
 router.get('/', fetchAll)
 
 // save
-router.post('/',upload.array('thumbnail'), beforeToDatabase, saveToDatabase)
+router.post('/',upload.array('thumbnail'), bridgeToDatabase, saveToDatabase)
 
 // delete
-router.delete('/:id', beforeToDelete, deleteToDatabase)
+router.delete('/:id', bridgeToDelete, deleteToDatabase)
 
 // update
-router.patch('/:id', upload.array('thumbnail'), beforeToUpdate, updateToDatabase)
+router.patch('/:id', upload.array('thumbnail'), bridgeToUpdate, updateToDatabase)
 
 // fetch data by id
-router.get('/:id', beforeFetchDataByID, fetchDataByID)
+router.get('/:id', bridgeFetchDataByID, fetchDataByID)
 
 // fetch data by keywords
-router.post('/keywords', beforeFetchDataByKeywords)
+router.post('/keywords', bridgeFetchDataByKeywords)
 
 // error handling
 router.use((err, req, res, next) => {
