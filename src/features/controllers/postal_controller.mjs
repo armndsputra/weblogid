@@ -171,8 +171,26 @@ export const fetchDataByKeywords = async ( req, res, next ) => {
         // 1. fetch data by keywords
         const result = await Blogs.find({$or: [{ title: { $regex: keywords, $options: 'i' }}]})
 
-        console.table(result)
-        return
+        // 2. print data
+        if (result) {
+            return res.status(201).json({
+                message : 'success',
+                print : result.map(e => {
+                    return {
+                         title : e.title,
+                         created : e.created,
+                         user : e.user,
+                         thumbnail : e.thumbnail,
+                         content : e.content
+                    }
+                })
+            })
+        } else {
+            return res.status(201).json({
+                message : 'not found!',
+                print : []
+            })
+        }
 
     } catch (err) {
         // handle errors

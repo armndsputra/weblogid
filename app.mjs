@@ -15,7 +15,7 @@ import postal from'./src/features/routes/postal_management/postal_route.mjs'
 import user from'./src/features/routes/user/user_route.mjs'
 
 app.use(morgan('dev'))
-app.use(urlencoded({ extended: true }));
+app.use(urlencoded({ extended: true }))
 app.use(json())
 
 

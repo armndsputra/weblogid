@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
 
-// Helper
+// helper
 import { __file_remove } from "../../../../../helpers/__file_remove.mjs";
 
-// Model
+// model
 import Blogs from '../../../../models/postal_model.mjs'
 
 export const bridgeToUpdate = async ( req, res, next ) => {
