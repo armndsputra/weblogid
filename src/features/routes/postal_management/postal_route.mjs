@@ -7,7 +7,8 @@ import {
   saveToDatabase, 
   deleteToDatabase, 
   updateToDatabase, 
-  fetchDataByID 
+  fetchDataByID,
+  fetchDataByKeywords
 } from '../../controllers/postal_controller.mjs'
 
 // Local helpers
@@ -36,7 +37,7 @@ router.patch('/:id', upload.array('thumbnail'), bridgeToUpdate, updateToDatabase
 router.get('/:id', bridgeFetchDataByID, fetchDataByID)
 
 // fetch data by keywords
-router.post('/keywords', bridgeFetchDataByKeywords)
+router.post('/keywords', bridgeFetchDataByKeywords, fetchDataByKeywords)
 
 // error handling
 router.use((err, req, res, next) => {

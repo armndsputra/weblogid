@@ -6,13 +6,10 @@ export const fetchAll = async ( req, res ) => {
     
     try {
 
-        // Find All / Get database
+        // 1. fetch all
         const results = await Blogs.find().exec()
-        results.map(e => {
-            console.table(e)
-        })
 
-        // print results
+        // 2. print results
         if (results) {
             return res.status(200).json({
                 message : 'success',
@@ -30,6 +27,7 @@ export const fetchAll = async ( req, res ) => {
         }
 
     } catch (err) {
+        // handle errors
         console.error(err)
         return res.status(500).json({
             message : 'Error system !',
@@ -42,10 +40,10 @@ export const saveToDatabase = async ( req, res ) => {
     
     try {
 
-        // insert a single document
+        // 1. save a single document
         const blogs = new Blogs(req.data)
 
-        // print the results
+        // 2. print the results
         const result = await blogs.save();
         if (result) return res.status(201).json({
             message : 'succeed',
@@ -61,14 +59,6 @@ export const saveToDatabase = async ( req, res ) => {
     } catch(err) {
         // handle errors
         console.log(err)
-        console.error(err.code)
-        // Handle duplicate key error (e.g., unique index violation)
-        if (err.code === 11000) {
-            return res.status(409).json({
-                message: 'Duplicate key error: A blog with this unique field already exists.'
-            });
-        }
-
         return res.status(500).json({ 
             message : 'Error system !'
          })
@@ -80,10 +70,10 @@ export const deleteToDatabase = async ( req, res) => {
 
      try {
         
-        // remove
+        // 1. remove data by ID
         const result = await Blogs.deleteOne({_id : req.data._id}).exec()
 
-        // print result data
+        // 2. print result data
         if (result) {
             return res.status(200).json({
                 message : 'deleted',
@@ -92,6 +82,7 @@ export const deleteToDatabase = async ( req, res) => {
         }
         
     } catch (err) {
+        // handle errors
         console.error(err)
         res.status(500).json({
             message : 'Error system !',
@@ -104,10 +95,10 @@ export const updateToDatabase = async ( req, res) => {
 
     try {
         
-        // update
+        // 1. update data by ID
         const result = await Blogs.findByIdAndUpdate(req.id, req.data, { new: true })
         
-        // print the result
+        // 2. print the result
         return res.status(201).json({
             message : 'success',
             print : {
@@ -120,6 +111,7 @@ export const updateToDatabase = async ( req, res) => {
         })
       
     } catch (err) {
+        // handle errors
         console.error(err)
         res.status(500).json({
             message : 'Error system !',
@@ -135,11 +127,11 @@ export const fetchDataByID = async ( req, res ) => {
 
     try {
 
-        // Get Database
+        // 1. fetch data by ID
         const result = await Blogs.findById({_id : id}).exec()
         console.log(result)
 
-        // print data
+        // 2. print data
         if (result) return res.status(200).json({
             message : 'success',
             print : {
@@ -151,6 +143,7 @@ export const fetchDataByID = async ( req, res ) => {
             }
         })
         
+        // 2.1 if data not found
         if (!result) return res.status(200).json({
             message : 'success',
             print : []
@@ -159,6 +152,30 @@ export const fetchDataByID = async ( req, res ) => {
         return
 
     } catch (err) {
+        // handle errors
+        console.error(err)
+        res.status(500).json({
+            message : 'Error system !',
+        })
+    }
+
+}
+
+// fetch data by keywords
+export const fetchDataByKeywords = async ( req, res, next ) => {
+
+    const keywords = req.keywords
+
+    try {
+
+        // 1. fetch data by keywords
+        const result = await Blogs.find({$or: [{ title: { $regex: keywords, $options: 'i' }}]})
+
+        console.table(result)
+        return
+
+    } catch (err) {
+        // handle errors
         console.error(err)
         res.status(500).json({
             message : 'Error system !',
