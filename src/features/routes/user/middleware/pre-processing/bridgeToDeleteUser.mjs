@@ -21,8 +21,11 @@ export const bridgeToDeleteUser = async ( req, res, next ) => {
 
 
     } catch (err) {
-
-
+         // handle errors
+        console.log(err)
+        res.status(500).json({
+            message : 'Error system !',
+        })
     }
 
 }

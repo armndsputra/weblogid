@@ -15,12 +15,7 @@ import {
 import { upload } from './helpers/_set_multer.mjs';
 
 // local middleware
-import { bridgeToDatabase } from './middleware/pre-processing/bridgeToDatabase.mjs'
-import { bridgeToUpdate } from  './middleware/pre-processing/bridgeToUpdate.mjs'
-import { bridgeToDelete } from './middleware/pre-processing/bridgeToDelete.mjs'
-import { bridgeFetchDataByID } from './middleware/pre-processing/bridgeToFetchDataByID.mjs'
-import { bridgeFetchDataByKeywords} from './middleware/pre-processing/bridgeToFetchDataByKeywords.mjs'
-import { bridgeFetchAll } from './middleware/pre-processing/bridgeToFetchAll.mjs';
+import { bridgeToDatabase, bridgeToUpdate,  bridgeFetchAll, bridgeFetchDataByID, bridgeToDelete, bridgeFetchDataByKeywords } from './middleware/main.mjs'
 
 // fetch all
 router.get('/', bridgeFetchAll, fetchAll)
