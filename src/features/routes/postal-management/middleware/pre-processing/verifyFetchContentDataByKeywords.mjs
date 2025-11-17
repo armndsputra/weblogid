@@ -1,4 +1,4 @@
-export const bridgeFetchDataByKeywords = async ( req, res, next ) => {
+export const verifyFetchContentDataByKeywords = async ( req, res, next ) => {
 
     try  {
 

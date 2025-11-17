@@ -1,10 +1,10 @@
-// npm
+// npm package manager
 import { body, validationResult } from 'express-validator'
 
 // model
 import User from '../../../../models/user-model.mjs'
 
-export const bridgeToRegister = async ( req, res, next ) => {
+export const verifyRegisterData = async ( req, res, next ) => {
 
     try {
 
@@ -24,14 +24,12 @@ export const bridgeToRegister = async ( req, res, next ) => {
         // 2.2 if the data does not meet the requirements, the uploaded file will be deleted
         const errors = validationResult(req)
         if (!errors.isEmpty()) {
-            
             console.error('validation errors :', errors.array())
             return res.status(422).json({
                     message: 'validation failed!',
                     errors: errors.array(),
                     receivedData: req.body
             });
-        
         }
 
         // 3. check if the data is available

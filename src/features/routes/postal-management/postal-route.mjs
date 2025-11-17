@@ -3,12 +3,12 @@ const router = express()
 
 // controllers
 import { 
-  fetchAll, 
-  saveToDatabase, 
-  deleteToDatabase, 
-  updateToDatabase, 
-  fetchDataByID,
-  fetchDataByKeywords
+  fetchAllContent, 
+  saveContent, 
+  deleteContent, 
+  updateContent, 
+  fetchContentByID,
+  fetchContentByKeywords
 } from '../../controllers/postal-controller.mjs'
 
 // route helpers
@@ -16,31 +16,31 @@ import { upload } from './helpers/_set_multer.mjs';
 
 // route middleware
 import {
-  bridgeToDatabase,
-  bridgeToUpdate,
-  bridgeFetchAll,
-  bridgeFetchDataByID,
-  bridgeToDelete,
-  bridgeFetchDataByKeywords
-} from './middleware/main.mjs'
+  verifyContentData,
+  verifyUpdateContentData,
+  verifyFetchAllContentData,
+  verifyFetchContentDataByID,
+  verifyDeleteContentData,
+  verifyFetchContentDataByKeywords
+} from './middleware/index.mjs'
 
 // fetch all
-router.get('/', bridgeFetchAll, fetchAll)
+router.get('/', verifyFetchAllContentData, fetchAllContent)
 
 // save
-router.post('/',upload.array('thumbnail'), bridgeToDatabase, saveToDatabase)
+router.post('/',upload.array('thumbnail'), verifyContentData, saveContent)
 
 // delete
-router.delete('/:id', bridgeToDelete, deleteToDatabase)
+router.delete('/:id', verifyDeleteContentData, deleteContent)
 
 // update
-router.patch('/:id', upload.array('thumbnail'), bridgeToUpdate, updateToDatabase)
+router.patch('/:id', upload.array('thumbnail'), verifyUpdateContentData, updateContent)
 
 // fetch data by id
-router.get('/:id', bridgeFetchDataByID, fetchDataByID)
+router.get('/:id', verifyFetchContentDataByID, fetchContentByID)
 
 // fetch data by keywords
-router.post('/keywords', bridgeFetchDataByKeywords, fetchDataByKeywords)
+router.post('/keywords', verifyFetchContentDataByKeywords, fetchContentByKeywords)
 
 // error handling
 router.use((err, req, res, next) => {

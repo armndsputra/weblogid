@@ -1,6 +1,0 @@
-export * from './pre-processing/bridgeToFetchAll.mjs'
-export * from './pre-processing/bridgeToDatabase.mjs'
-export * from './pre-processing/bridgeToUpdate.mjs'
-export * from './pre-processing/bridgeToFetchDataByID.mjs'
-export * from './pre-processing/bridgeToFetchDataByKeywords.mjs'
-export * from './pre-processing/bridgeToDelete.mjs'

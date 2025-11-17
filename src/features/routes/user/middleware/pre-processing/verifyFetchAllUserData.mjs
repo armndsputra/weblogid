@@ -1,4 +1,4 @@
-export const bridgeToFetchAllUser = async ( req, res, next ) => {
+export const verifyFetchAllUserData = async ( req, res, next ) => {
 
     try {
 

@@ -13,7 +13,7 @@ async function _page_breaker( limit, offset) {
 }
 
 // http://localhost:3000/postal/?limit=2&offset=0 example pagination
-export const bridgeFetchAll = async ( req, res, next ) => {
+export const verifyFetchAllContentData = async ( req, res, next ) => {
 
     const { limit, offset } = req.query
 

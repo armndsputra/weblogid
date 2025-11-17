@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-export const bridgeFetchDataByID = async ( req, res, next) => {
+export const verifyFetchContentDataByID = async ( req, res, next) => {
 
     const id = req.params.id
 

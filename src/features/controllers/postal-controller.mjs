@@ -2,7 +2,7 @@
 import Blogs from '../models/postal-model.mjs'
 
 // find All data
-export const fetchAll = async ( req, res ) => {
+export const fetchAllContent = async ( req, res ) => {
     
     try {
 
@@ -36,7 +36,7 @@ export const fetchAll = async ( req, res ) => {
 }
 
 // save
-export const saveToDatabase = async ( req, res ) => {
+export const saveContent = async ( req, res ) => {
     
     try {
 
@@ -66,7 +66,7 @@ export const saveToDatabase = async ( req, res ) => {
 }
 
 // remove data
-export const deleteToDatabase = async ( req, res) => {
+export const deleteContent = async ( req, res) => {
 
      try {
         
@@ -91,7 +91,7 @@ export const deleteToDatabase = async ( req, res) => {
 }
 
 // edit / update data
-export const updateToDatabase = async ( req, res) => {
+export const updateContent = async ( req, res) => {
 
     try {
         
@@ -121,7 +121,7 @@ export const updateToDatabase = async ( req, res) => {
 }
 
 // fetch data by id
-export const fetchDataByID = async ( req, res ) => {
+export const fetchContentByID = async ( req, res ) => {
 
     const id = req.id
 
@@ -162,7 +162,7 @@ export const fetchDataByID = async ( req, res ) => {
 }
 
 // fetch data by keywords
-export const fetchDataByKeywords = async ( req, res, next ) => {
+export const fetchContentByKeywords = async ( req, res, next ) => {
 
     const keywords = req.keywords
 

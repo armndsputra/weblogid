@@ -73,7 +73,7 @@ export const fetchAllUser = async ( req, res ) => {
 }
 
 // delete user
-export const deleteToUser =  async ( req, res ) => {
+export const deleteUser =  async ( req, res ) => {
 
     try {
 
