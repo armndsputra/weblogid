@@ -19,17 +19,15 @@ export const login = async ( req, res ) => {
         jwt.sign({ 
             id : id,
             role : 'user'
-        }, process.env.JWT_KEY, { expiresIn: "4h" }, function(err, token) {
+        }, process.env.JWT_KEY, { expiresIn: "5m" }, function(err, token) {
             if (err) return console.error(err)
                 return res.status(201).json({
                     message : "you have successfully logged in",
                     access_token : token,
-                    token_type: "Bearer",
-                    expires_in: "4h"
+                    token_type: "bearer",
+                    expires_in: "5m"
                 })
         })
-
-        return
 
     } catch (err) {
          // handle errors
