@@ -3,7 +3,7 @@ import { body, validationResult } from 'express-validator'
 import bcrypt from "bcrypt"
 
 // model
-import User from '../../../../models/user-model.mjs'
+import User from '../../../../models/userModel.mjs'
 
 export const verifyRegisterData = async ( req, res, next ) => {
 

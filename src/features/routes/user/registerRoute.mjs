@@ -2,7 +2,7 @@ import  express  from 'express'
 const router = express()
 
 // controllers
-import { register } from '../../controllers/user-controller.mjs'
+import { register } from '../../controllers/userController.mjs'
 
 // middleware
 import { verifyRegisterData } from './middleware/index.mjs'

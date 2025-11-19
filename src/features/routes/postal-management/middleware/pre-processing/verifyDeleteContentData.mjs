@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 // Model
-import Blogs from '../../../../models/postal-model.mjs'
+import Contents from '../../../../models/postalModel.mjs'
 
 // helper
 import { __file_remove } from "../../../../../helpers/__file_remove.mjs";
@@ -15,7 +15,7 @@ export const verifyDeleteContentData = async ( req, res, next ) => {
         if (!mongoose.Types.ObjectId.isValid(id)) return res.status(400).json({ message : 'invalid id!'})
         
         // 2. Check if data exists
-        const result = await Blogs.findById(id);
+        const result = await Contents.findById(id);
         if (!result) return res.status(404).json({ message : 'data not found!'})
 
         // 3. delete file

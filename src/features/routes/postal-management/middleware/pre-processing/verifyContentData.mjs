@@ -4,7 +4,7 @@ import { body, validationResult } from 'express-validator'
 import { __file_remove } from "../../../../../helpers/__file_remove.mjs";
 
 // Model
-import Blogs from '../../../../models/postal-model.mjs'
+import Contents from '../../../../models/postalModel.mjs'
 
 export const verifyContentData = async ( req, res, next ) => {
 
@@ -61,7 +61,7 @@ export const verifyContentData = async ( req, res, next ) => {
         }
 
         // 5. check if the data already exists
-        const title = await Blogs.findOne({ title : req.body.title})
+        const title = await Contents.findOne({ title : req.body.title})
         console.table(title)
         if (title) { 
             // remove files

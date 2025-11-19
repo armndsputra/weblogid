@@ -2,7 +2,7 @@ import  express  from 'express'
 const router = express()
 
 // controllers
-import { fetchAllUser, deleteUser } from '../../controllers/user-controller.mjs'
+import { fetchAllUser, deleteUser } from '../../controllers/userController.mjs'
 
 // middleware
 import { verifyDeleteUserData, verifyFetchAllUserData } from './middleware/index.mjs'

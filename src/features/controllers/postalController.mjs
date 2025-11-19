@@ -1,5 +1,5 @@
 // Model
-import Blogs from '../models/postal-model.mjs'
+import Contents from '../models/postalModel.mjs'
 
 // find All data
 export const fetchAllContent = async ( req, res ) => {
@@ -7,7 +7,7 @@ export const fetchAllContent = async ( req, res ) => {
     try {
 
         // 1. fetch all
-        const results = await Blogs.find().skip(req.data.offset).limit(req.data.limit).exec()
+        const results = await Contents.find().skip(req.data.offset).limit(req.data.limit).exec()
 
         // 2. print results
         if (results) {
@@ -41,10 +41,10 @@ export const saveContent = async ( req, res ) => {
     try {
 
         // 1. save a single document
-        const blogs = new Blogs(req.data)
+        const content = new Contents(req.data)
 
         // 2. print the results
-        const result = await blogs.save();
+        const result = await content.save();
         if (result) return res.status(201).json({
             message : 'succeed',
             print : {
@@ -71,7 +71,7 @@ export const deleteContent = async ( req, res) => {
      try {
         
         // 1. remove data by ID
-        const result = await Blogs.deleteOne({_id : req.data._id}).exec()
+        const result = await Contents.deleteOne({_id : req.data._id}).exec()
 
         // 2. print result data
         if (result) {
@@ -96,7 +96,7 @@ export const updateContent = async ( req, res) => {
     try {
         
         // 1. update data by ID
-        const result = await Blogs.findByIdAndUpdate(req.id, req.data, { new: true })
+        const result = await Contents.findByIdAndUpdate(req.id, req.data, { new: true })
         
         // 2. print the result
         return res.status(201).json({
@@ -128,7 +128,7 @@ export const fetchContentByID = async ( req, res ) => {
     try {
 
         // 1. fetch data by ID
-        const result = await Blogs.findById({_id : id}).exec()
+        const result = await Contents.findById({_id : id}).exec()
         console.log(result)
 
         // 2. print data
@@ -169,7 +169,7 @@ export const fetchContentByKeywords = async ( req, res, next ) => {
     try {
 
         // 1. fetch data by keywords
-        const result = await Blogs.find({$or: [{ title: { $regex: keywords, $options: 'i' }}]})
+        const result = await Contents.find({$or: [{ title: { $regex: keywords, $options: 'i' }}]})
 
         // 2. print data
         if (result) {

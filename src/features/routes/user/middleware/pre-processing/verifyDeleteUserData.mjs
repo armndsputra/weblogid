@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-import User from '../../../../models/user-model.mjs'
+import User from '../../../../models/userModel.mjs'
 
 export const verifyDeleteUserData = async ( req, res, next ) => {
 

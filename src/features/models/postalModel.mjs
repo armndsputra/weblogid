@@ -9,4 +9,4 @@ const setSchema = new Schema({
     content : { type : String, required: true },
 })
 
-export default mongoose.model('blogs', setSchema);
+export default mongoose.model('contents', setSchema);

@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 import { __file_remove } from "../../../../../helpers/__file_remove.mjs";
 
 // model
-import Blogs from '../../../../models/postal-model.mjs'
+import Contents from '../../../../models/postalModel.mjs'
 
 export const verifyUpdateContentData = async ( req, res, next ) => {
 
@@ -32,7 +32,7 @@ export const verifyUpdateContentData = async ( req, res, next ) => {
         }
       
         // 3. check if data exists
-        const result = await Blogs.findById(id)
+        const result = await Contents.findById(id)
         if (!result) {
             // remove files
             await __file_remove(thumbnailPaths).then(result => {

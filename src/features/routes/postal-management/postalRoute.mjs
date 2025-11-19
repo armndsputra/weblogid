@@ -9,7 +9,7 @@ import {
   updateContent, 
   fetchContentByID,
   fetchContentByKeywords
-} from '../../controllers/postal-controller.mjs'
+} from '../../controllers/postalController.mjs'
 
 // route helpers
 import { upload } from './helpers/_set_multer.mjs';
