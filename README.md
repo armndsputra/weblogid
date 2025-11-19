@@ -15,6 +15,7 @@
 3. > npm start
    
 ### Register
+
 - `POST /register` - Register User
   ```json
   {
