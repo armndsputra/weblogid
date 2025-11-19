@@ -2,20 +2,21 @@
 ---
 ## Overview
 1. > npm install
-2. > .env
-   
-    > #server
-    > PORT='3000'
-    > #DATABASE MONGODB URL
-    > MONGODB_URL = ''
-    > #JWT KEY
-    > JWT_KEY = ''
-
-
+2. > add .env file
+   ```
+    #server
+    PORT='3000'
+    #DATABASE MONGODB URL
+    MONGODB_URL = ''
+    #JSON Web Token (JWT) Key
+    JWT_KEY = ''
+   ```
+  
 3. > npm start
-   
+   ---
 ### Register
-- `POST /register` - Register User
+- `POST /register` - Register
+  
   ```json
   {
     "name" : "my name", // required | 
@@ -25,5 +26,15 @@
     "confirm_password" : "***", // required
     "birthday" : "12-10-1996", // required
     "gender" : "male",
+  }
+  ```
+
+### Login
+- `POST /login` - Login
+  
+  ```json
+  {
+    "email" : "@mail.com", // required
+    "password" : "***", // required
   }
   ```

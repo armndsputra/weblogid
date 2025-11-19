@@ -8,12 +8,13 @@ import { fetchAllUser, deleteUser } from '../../controllers/userController.mjs'
 import { verifyDeleteUserData, verifyFetchAllUserData } from './middleware/index.mjs'
 
 // service
-import { deleteAccess } from '../../service/deleteAccess.mjs'
+import { deleteAccessUser } from '../../service/deleteAccessUser.mjs'
+import { fetchAccessUser } from '../../service/fetchAccessUser.mjs'
 
 // fetch all user
-router.get('/', verifyFetchAllUserData, fetchAllUser)
+router.get('/', fetchAccessUser, verifyFetchAllUserData, fetchAllUser)
 
 // delete user
-router.delete('/:id', deleteAccess, verifyDeleteUserData, deleteUser)
+router.delete('/:id', deleteAccessUser, verifyDeleteUserData, deleteUser)
 
 export default router

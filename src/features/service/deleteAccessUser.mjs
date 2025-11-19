@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken';
 // helper
 import { __read_data } from '../../helpers/__read_data.mjs';
 
-export const deleteAccess = async ( req, res, next ) => {
+export const deleteAccessUser = async ( req, res, next ) => {
 
     try {
 

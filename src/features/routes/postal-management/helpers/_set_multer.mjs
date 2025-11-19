@@ -3,7 +3,7 @@ import multer from 'multer';
 // configure storage for multer
 const storage = multer.diskStorage({
       destination: (req, file, cb) => {
-        cb(null, 'uploads/blogs/'); // specify the upload directory
+        cb(null, 'uploads/contents/'); // specify the upload directory
       },
       filename: (req, file, cb) => {
         cb(null, new Date().toISOString()+'-'+Math.round(Math.random() * 1E9)+'.'+file.mimetype.split('/')[1]); // rename the file
