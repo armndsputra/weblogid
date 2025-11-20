@@ -12,7 +12,7 @@ import {
 } from '../../controllers/postalController.mjs'
 
 // route helpers
-import { upload } from './helpers/_set_multer.mjs';
+import { upload } from './helpers/_set_multer.mjs'
 
 // route middleware
 import {

@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from "mongoose"
 
 // helper
 import { __file_remove } from "../../../../../helpers/__file_remove.mjs";
@@ -20,10 +20,9 @@ export const verifyUpdateContentData = async ( req, res, next ) => {
                     console.log('operation result:', result)
                 }).catch(error => {
                     console.error('operation failed:', error)
-                });
+                })
             
             return res.status(400).json({ message : 'invalid id!'})
-            
         }
 
         // 2. organize file paths into an array
