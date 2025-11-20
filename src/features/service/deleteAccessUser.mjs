@@ -1,8 +1,5 @@
 // npm package manager
-import jwt from 'jsonwebtoken';
-
-// helper
-import { __read_data } from '../../helpers/__read_data.mjs';
+import jwt from 'jsonwebtoken'
 
 export const deleteAccessUser = async ( req, res, next ) => {
 

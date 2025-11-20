@@ -16,7 +16,7 @@ export const verifyDeleteUserData = async ( req, res, next ) => {
         const user = await User.findById(id)
         if (!user) return res.status(404).json({ message : 'ID data you are looking for was not found!'})
 
-        // ACCESS DELETE USER
+        // ACCESS DELETE USER ( AuthorizationAuthorization )
         if (user.role === role) {
             return res.status(403).json({ message : 'forbidden : user is prohibited from being deleted!'})
         }

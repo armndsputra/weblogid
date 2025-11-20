@@ -8,7 +8,7 @@ export const verifyFetchAllUserData = async ( req, res, next ) => {
          // handle errors
         console.log(err)
         res.status(500).json({
-            message : 'Error system !',
+            message : 'Error system!',
         })
     }
 
