@@ -1,6 +1,6 @@
 // npm package manager
 import bcrypt from "bcrypt"
-import jwt from 'jsonwebtoken';
+import jwt from 'jsonwebtoken'
 
 export const login = async ( req, res ) => {
 

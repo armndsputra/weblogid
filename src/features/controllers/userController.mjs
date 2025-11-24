@@ -121,7 +121,7 @@ export const updateUser = async ( req, res ) => {
         return res.status(201).json({
             message : 'success',
             print : {
-                user : data.username,
+                user : data.name,
                 gender : data.gender,
                 birthday : data.birthday,
                 created : data.created,

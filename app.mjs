@@ -7,10 +7,10 @@ const {urlencoded , json} = pkg
 import 'dotenv/config'
 
 // routes
-import postal from'./src/features/routes/postal-management/postalRoute.mjs'
-import user from'./src/features/routes/user/userRoute.mjs'
-import register from './src/features/routes/user/registerRoute.mjs'
-import login from './src/features/routes/user/loginRoute.mjs'
+import postal from'./src/features/routes/postalRoute.mjs'
+import user from'./src/features/routes/userRoute.mjs'
+import register from './src/features/routes/registerRoute.mjs'
+import login from './src/features/routes/loginRoute.mjs'
 
 app.use(morgan('dev'))
 app.use(urlencoded({ extended: true }))

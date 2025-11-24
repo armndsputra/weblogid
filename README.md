@@ -38,3 +38,22 @@
     "password" : "***", // required
   }
   ```
+
+### Update User ( User )
+- `PATCH /user/id_user` - Update
+  
+  - Requires header authorization 
+    ```json
+    {
+      "Authorization" : "Bearer "
+    }
+    ```
+- Bequest body
+  ```json
+  {
+    "name" : "name",
+    "gender": "famele",
+    "birthday" : "12-10-1945",
+    "avatar" : "default.jpg" // file
+  }
+  ```

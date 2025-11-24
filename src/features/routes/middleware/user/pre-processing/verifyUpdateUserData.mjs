@@ -1,5 +1,5 @@
 import mongoose from "mongoose"
-import bcrypt from "bcrypt"
+// import bcrypt from "bcrypt"
 
 import User from "../../../../models/userModel.mjs"
 
@@ -9,6 +9,11 @@ import { __file_remove } from "../../../../../helpers/__file_remove.mjs";
 export const verifyUpdateUserData = async ( req, res, next) => {
 
     try {
+
+        // ACCESS UPDATE USER
+        const _id = req.decode.id
+
+        if (!req.body) return res.status(422).json({ message: 'No data provided in request body!' })
 
         const id = req.params.id
         const { name, gender, birthday } = req.body
@@ -57,6 +62,17 @@ export const verifyUpdateUserData = async ( req, res, next) => {
             }).catch(error => {
                 console.error('Operation failed:', error)
             })
+        }
+
+        // // ACCESS UPDATE USER
+        if (_id !== id) {
+            // remove files
+            await __file_remove(avatarPaths).then(result => {
+                console.log('Operation result:', result)
+            }).catch(error => {
+                console.error('Operation failed:', error)
+            })
+            return res.status(403).json({ message : 'forbidden : access is restricted!'})
         }
 
         // 7. data has been verified

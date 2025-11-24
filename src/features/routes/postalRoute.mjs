@@ -9,10 +9,10 @@ import {
   updateContent, 
   fetchContentByID,
   fetchContentByKeywords
-} from '../../controllers/postalController.mjs'
+} from '../controllers/postalController.mjs'
 
 // route helpers
-import { upload } from './helpers/_set_multer.mjs'
+import { upload } from './middleware/postal/helpers/_set_multer.mjs'
 
 // route middleware
 import {
