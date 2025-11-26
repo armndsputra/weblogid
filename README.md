@@ -1,12 +1,12 @@
 ## `OASE` `Personal` `Website`
 # Authentication & User Management API
 ## Overview
-*API for user management with role-based authentication and authorization system (Admin/User)*
+*API for user management with role-based authentication and authorization system ( Admin/User )*
 ### Role-based Features
  | Role  | Permissions |
 |-------|-------------|
 | ADMIN | delete user, fetch all user |
-| USER  | update user |
+| USER  | update user, post content |
 
 ---
 1. > npm install
@@ -135,3 +135,47 @@
         }
     }
   ```
+
+
+
+
+
+
+
+---
+## Feature | User
+### Posting Content
+  - **Endpoint** : `POST /postal`
+    **Request Body:**
+  ```json
+  {
+    "title" : "***",
+    "content" : "---"
+  }
+  ```
+  **Response** :
+  ```json
+  {
+    "message": "succeed",
+    "data": {
+        "user": "***",
+        "title": "***",
+        "created": "--- --- ---",
+        "thumbnail": "uploads/contents/***",
+        "content": "--- --- ---"
+    }
+  }
+  ```
+  ### Delete Content
+  - **Endpoint** : `DELETE /postal/id_content`
+  
+   **Response**
+   ```json
+   {
+    "message": "deleted",
+    "deleted": {
+        "id": "***",
+        "title": "***"
+    }
+  }
+   ```

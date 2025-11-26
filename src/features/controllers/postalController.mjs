@@ -70,14 +70,19 @@ export const deleteContent = async ( req, res) => {
 
      try {
         
+        const id = req.data.id
+
         // 1. remove data by ID
-        const result = await Contents.deleteOne({_id : req.data._id}).exec()
+        const result = await Contents.findByIdAndDelete(id)
 
         // 2. print result data
         if (result) {
             return res.status(200).json({
                 message : 'deleted',
-                deleted : result.deletedCount
+                deleted : {
+                    id : result._id,
+                    title : result.title
+                }
             })
         }
         
@@ -101,7 +106,7 @@ export const updateContent = async ( req, res) => {
         // 2. print the result
         return res.status(201).json({
             message : 'success',
-            print : {
+            data : {
                 user : result.user,
                 title : result.title,
                 created : result.created,

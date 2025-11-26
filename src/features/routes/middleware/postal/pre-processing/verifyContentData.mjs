@@ -1,7 +1,7 @@
 import { body, validationResult } from 'express-validator'
 
 // Helper
-import { __file_remove } from "../../../../../helpers/__file_remove.mjs";
+import { __file_remove } from "../../../../../helpers/__file_remove.mjs"
 
 // Model
 import Contents from '../../../../models/postalModel.mjs'
@@ -12,6 +12,9 @@ export const verifyContentData = async ( req, res, next ) => {
 
     try {
 
+        // MAIN ACCESS USER
+        const idUser = req.decode.id
+
         // 1. Organize file paths into an array
         if (req.files && req.files.length > 0) {
             thumbnailPaths = req.files.map(file => file.path)
@@ -20,7 +23,6 @@ export const verifyContentData = async ( req, res, next ) => {
         // 2.1 check the sent data and validation rules
         await Promise.all([
                 body('title').notEmpty().withMessage('title is required!').run(req),
-                body('user').notEmpty().withMessage('user is required!').run(req),
                 body('content').notEmpty().withMessage('content is required!').run(req)
             ])
 
@@ -57,7 +59,7 @@ export const verifyContentData = async ( req, res, next ) => {
         // 4. Check if a file was uploaded
         if (!req.files || req.files.length === 0) {
             console.error('file has not been uploaded!')
-            return res.status(400).json({ message: 'file is required!' });
+            return res.status(400).json({ message: 'file is required!' })
         }
 
         // 5. check if the data already exists
@@ -75,7 +77,7 @@ export const verifyContentData = async ( req, res, next ) => {
 
         // 6. The result of the data sent to the request body
         const data = {
-            user : req.body.user,
+            user : idUser,
             created : new Date(),
             title : req.body.title,
             content : req.body.content,

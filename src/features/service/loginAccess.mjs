@@ -1,4 +1,4 @@
-import jwt from 'jsonwebtoken';
+import jwt from 'jsonwebtoken'
 
 export const loginAccess = async (req, res ,next) => {
 

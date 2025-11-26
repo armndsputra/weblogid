@@ -24,14 +24,17 @@ import {
   verifyFetchContentDataByKeywords
 } from './middleware/index.mjs'
 
+// service
+import { mainAccessUser } from '../service/mainAccessUser.mjs'
+
 // fetch all
 router.get('/', verifyFetchAllContentData, fetchAllContent)
 
 // save
-router.post('/',upload.array('thumbnail'), verifyContentData, saveContent)
+router.post('/',mainAccessUser, upload.array('thumbnail'), verifyContentData, saveContent)
 
 // delete
-router.delete('/:id', verifyDeleteContentData, deleteContent)
+router.delete('/:id', mainAccessUser, verifyDeleteContentData, deleteContent)
 
 // update
 router.patch('/:id', upload.array('thumbnail'), verifyUpdateContentData, updateContent)
