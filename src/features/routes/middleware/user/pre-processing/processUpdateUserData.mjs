@@ -72,7 +72,7 @@ export const processUpdateUserData = async ( req, res, next) => {
             }).catch(error => {
                 console.error('operation failed :', error)
             })
-            return res.status(403).json({ message : 'forbidden : access is restricted!'})
+            return res.status(403).json({ message : 'forbidden : the user does not have access!'})
         }
 
         // 7. data has been verified

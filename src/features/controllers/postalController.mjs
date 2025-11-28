@@ -13,14 +13,14 @@ export const fetchAllContent = async ( req, res ) => {
         if (results) {
             return res.status(200).json({
                 message : 'success',
-                print : results.map(e => {
+                data : results.map(e => {
                     return {
                         id : e._id,
                         user : e.user,
-                        created : e.created,
                         title : e.title,
+                        content : e.content,
                         thubnail : e.thumbnail,
-                        content : e.content
+                        created : e.created,
                     }
                 })
             })
@@ -50,9 +50,9 @@ export const saveContent = async ( req, res ) => {
             print : {
                 user : result.user,
                 title : result.title,
-                created : result.created,
+                content : result.content,
                 thumbnail : result.thumbnail,
-                content : result.content
+                created : result.created,
             }
         })
        
@@ -109,9 +109,9 @@ export const updateContent = async ( req, res) => {
             data : {
                 user : result.user,
                 title : result.title,
-                created : result.created,
+                content : result.content,
                 thumbnail : result.thumbnail,
-                content : result.content
+                created : result.created,
             }
         })
       
@@ -139,12 +139,13 @@ export const fetchContentByID = async ( req, res ) => {
         // 2. print data
         if (result) return res.status(200).json({
             message : 'success',
-            print : {
+            data : {
+                id : result._id,
                 user : result.user,
                 title : result.title,
-                created : result.created,
+                content : result.content,
                 thumbnail : result.thumbnail,
-                content : result.content
+                created : result.created,
             }
         })
         
@@ -180,13 +181,14 @@ export const fetchContentByKeywords = async ( req, res, next ) => {
         if (result) {
             return res.status(201).json({
                 message : 'success',
-                print : result.map(e => {
+                data : result.map(e => {
                     return {
-                         title : e.title,
-                         created : e.created,
-                         user : e.user,
-                         thumbnail : e.thumbnail,
-                         content : e.content
+                        id : e._id,
+                        title : e.title,
+                        user : e.user,
+                        content : e.content,
+                        thumbnail : e.thumbnail,
+                        created : e.created,
                     }
                 })
             })

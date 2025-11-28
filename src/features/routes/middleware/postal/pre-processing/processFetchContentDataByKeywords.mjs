@@ -2,6 +2,8 @@ export const processFetchContentDataByKeywords = async ( req, res, next ) => {
 
     try  {
 
+        if (!req.body) return res.status(400).json({ message : 'keyword is required!'})
+
         // 1. fetch data by keywords
         const { keywords } = req.body
         
@@ -11,7 +13,7 @@ export const processFetchContentDataByKeywords = async ( req, res, next ) => {
         }
         
         // 3. data has been verified
-        req.keywords = keywords
+        req.keywords = keywords.toLowerCase()
         next()
 
     } catch (err) {

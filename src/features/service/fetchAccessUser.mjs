@@ -27,7 +27,7 @@ export const fetchAccessUser = async ( req, res, next ) => {
             if (decode.role === 'admin') {
                 req.decode = decode
                 return next()
-            } else return res.status(403).json({ message : 'forbidden : access is restricted!'})
+            } else return res.status(403).json({ message : 'forbidden : the user does not have access!'})
         })
 
     } catch (err) {

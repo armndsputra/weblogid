@@ -28,7 +28,7 @@ export const updateAccessUser = async ( req, res, next ) => {
                 req.decode = decode
                     return next()
             } else
-            return res.status(403).json({ message : 'forbidden : access is restricted!'})
+            return res.status(403).json({ message : 'forbidden : the user does not have access!'})
         })
 
     } catch (err) {

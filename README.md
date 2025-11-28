@@ -1,4 +1,12 @@
 ## `OASE` `Personal` `Website`
+
+| Layer | Technology |
+|-|-|
+| ![js Logo](./icons/js.png) | JavaScript |
+| <img src="https://nodejs.org/static/images/logo.svg" width="100" alt="Node.js Logo">  | Node.js |
+| <img src="https://webassets.mongodb.com/_com_assets/cms/mongodb_logo1-76twgcu2dm.png" width="100" alt="MongoDB"> | Mongodb |
+
+
 # Authentication & User Management API
 ## Overview
 *API for user management with role-based authentication and authorization system ( Admin/User )*
@@ -7,6 +15,7 @@
 |-------|-------------|
 | ADMIN | delete user, fetch all user |
 | USER  | update user, post content |
+| GENERAL  | fetch all contents, fetch content by id, fetch content by keywords |
 
 ---
 1. > npm install
@@ -38,7 +47,7 @@
   }
   ```
 
-  ##### Response :
+  ##### Response Success :
   ```json
     {
     "message": "succed",
@@ -66,7 +75,7 @@
     "password" : "------"
 }
 ```
-##### Response :
+##### Response Success :
 ```json
 {
     "message": "you have successfully logged in",
@@ -84,11 +93,7 @@
     "Authorization" : "Bearer --- --- --- ---" // access token code
 }
 ```
-
-<div style="text-align: right;letter-spacing: 6px;">
-<h3>ADMIN FEATURE</h3>
-</div>
-
+## ADMIN ACCESS
 ***FEATURE :***
 - [x] `GET /user` - fetch all user
 - [x] `DELETE /user/id_user` - delete user
@@ -96,7 +101,7 @@
 
 ### 1. Fetch All User
   - **Endpoint :** `GET /user`
-  ##### Response :
+  ##### Response Success :
   ```json
     {
     "message": "success",
@@ -120,16 +125,16 @@
             "gender": "female",
             "birthday": "00-00-0000",
             "avatar": "default",
-            "role": "admin",
+            "role": "user",
             "created": "--- --- ---"
         }
     ]
     }
   ```
   
-### Delete User By ID
+### 2. Delete User By ID
 - **Endpoint** : `DELETE /user/id_user`
-##### Response :
+##### Response Success :
 ```json
     {
         "message": "the user has been successfully deleted",
@@ -142,15 +147,14 @@
     }
 ```
 
-<div style="text-align: right;letter-spacing: 6px;">
-<h3>USER FEATURE</h3>
-</div>
 
+
+## USER ACCESS
 ***FEATURE :***
 - [x] `POST /postal` - posting content
-- [x] `DELETE /postal/id_user` - delete content
+- [x] `DELETE /postal/id_content` - delete content
 
-### Posting Content
+### 1. Posting Content
   - **Endpoint** : `POST /postal`
   ##### Request Body :
   ```json
@@ -159,23 +163,23 @@
     "content" : "--- --- ---"
   }
   ```
-  **Response** :
+  ##### Response Success :
   ```json
   {
     "message": "succeed",
     "data": {
         "user": "------",
         "title": "--- --- ---",
-        "created": "--- --- ---",
+        "content": "--- --- ---",
         "thumbnail": "uploads/contents/------",
-        "content": "--- --- ---"
+        "created": "--- --- ---",
     }
   }
   ```
-  ### Delete Content
+  ### 2. Delete Content
   - **Endpoint** : `DELETE /postal/id_content`
   
-   ##### Response :
+   ##### Response Success :
    ```json
    {
     "message": "deleted",
@@ -185,3 +189,78 @@
     }
   }
    ```
+
+## GENERAL ACCESS
+***FEATURE :***
+- [x] `GET /postal` - fetch all content
+- [x] `GET /postal/id_user` - fetch by id content
+- [x] `POST /postal/keyword` - fetch by keyword
+  
+### 1. Fetch All Content
+  - **Endpoint** : `GET /postal/?limit=0&offset=0`
+  ##### `Pagination` Params :
+  ```json
+  {
+    "limit" : 0,
+    "offset" : 0
+  }
+  ```
+  ##### Response Success : 
+
+```json
+{
+    "message": "success",
+    "data": [
+        {
+            "id": "------",
+            "user": "------",
+            "title": "--- --- ---",
+            "content": "--- --- ---",
+            "thubnail": "uploads/contents/------",
+            "created": "--- --- ---",
+        }
+    ]
+}
+```
+
+### 2. Fetch Content By ID
+- **Endpoint** : `GET /postal/id_content`
+##### Response Success :
+```json
+{
+    "message": "success",
+    "data": {
+        "id": "------",
+        "user": "------",
+        "title": "--- --- ---",
+        "content": "--- --- ---",
+        "thubnail": "uploads/contents/------",
+        "created": "--- --- ---",
+    }
+}
+```
+
+### 3. Fetch Content By Keywords
+- **Endpoint** : `POST /postal/keywords`
+##### Request Body :
+```json
+{
+  "keywords" : "--- --- ---"
+}
+```
+##### Response Success : 
+```json
+{
+    "message": "success",
+    "data": [
+        {
+        "id": "------",
+        "user": "------",
+        "title": "--- --- ---",
+        "content": "--- --- ---",
+        "thubnail": "uploads/contents/------",
+        "created": "--- --- ---",
+        }
+    ]
+}
+```
