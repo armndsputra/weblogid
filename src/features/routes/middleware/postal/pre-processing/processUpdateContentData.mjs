@@ -47,8 +47,9 @@ export const processUpdateContentData = async ( req, res, next ) => {
             return res.status(404).json({ message : 'ID data not available!'})
         }
 
+        // 4. validate access user
         // MAIN ACCESS USER
-        if (req.decode.id !== result.user) {
+        if (req.decode.id !== result.user.toString()) {
             // remove files
             await __file_remove(thumbnailPaths).then(result => {
                     console.log('operation result:', result)

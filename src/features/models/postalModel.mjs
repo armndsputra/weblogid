@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 const { Schema } = mongoose;
 
 const setSchema = new Schema({
-    user : { type : String, required: true },
+    user : { type : mongoose.Schema.Types.ObjectId, required: true , ref : 'users' },
     title : { type : String, required: true },
     content : { type : String, required: true },
     thumbnail : { type : String, required: true },

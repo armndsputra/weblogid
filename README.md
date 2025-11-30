@@ -245,6 +245,10 @@
             "content": "--- --- ---",
             "thubnail": "uploads/contents/------",
             "created": "--- --- ---",
+            "author": {
+                "_id": "---------",
+                "name": "--- --- ---"
+            }
         }
     ]
 }

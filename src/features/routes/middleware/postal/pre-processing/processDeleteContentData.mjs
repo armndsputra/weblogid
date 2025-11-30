@@ -19,7 +19,7 @@ export const processDeleteContentData = async ( req, res, next ) => {
         if (!result) return res.status(404).json({ message : 'ID data not available!'})
 
         // MAIN ACCESS USER
-        if (req.decode.id !== result.user) return res.status(403).json({ message : 'forbidden : remove restricted access!'})
+        if (req.decode.id !== result.user.toString()) return res.status(403).json({ message : 'forbidden : remove restricted access!'})
         
         // 3. delete file
         let filePaths = []

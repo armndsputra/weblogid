@@ -7,8 +7,8 @@ export const fetchAllContent = async ( req, res ) => {
     try {
 
         // 1. fetch all
-        const results = await Contents.find().skip(req.data.offset).limit(req.data.limit).exec()
-
+        const results = await Contents.find().skip(req.data.offset).limit(req.data.limit).populate('user', 'id name').exec()
+        console.log(results)
         // 2. print results
         if (results) {
             return res.status(200).json({
@@ -16,11 +16,11 @@ export const fetchAllContent = async ( req, res ) => {
                 data : results.map(e => {
                     return {
                         id : e._id,
-                        user : e.user,
                         title : e.title,
                         content : e.content,
                         thubnail : e.thumbnail,
                         created : e.created,
+                        author : e.user,
                     }
                 })
             })
