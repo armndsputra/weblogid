@@ -68,10 +68,10 @@ export const processContentData = async ( req, res, next ) => {
         if (title) { 
             // remove files
             await __file_remove(thumbnailPaths).then(result => {
-                    console.log('Operation result:', result)
+                    console.log('operation result:', result)
                 }).catch(error => {
-                    console.error('Operation failed:', error)
-                });
+                    console.error('operation failed:', error)
+                })
             return res.status(404).json({ message : 'the title entered is the same'})
         }
 

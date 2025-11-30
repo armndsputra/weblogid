@@ -13,11 +13,11 @@ export const processDeleteUserData = async ( req, res, next ) => {
         const id = req.params.id
 
         // 1. check id valid or not
-        if (!mongoose.Types.ObjectId.isValid(id)) return res.status(400).json({ message : 'the ID you entered is incorrect!'})
+        if (!mongoose.Types.ObjectId.isValid(id)) return res.status(400).json({ message : 'incorrect ID entered!'})
 
         // 2. Check if data exists
         const user = await User.findById(id)
-        if (!user) return res.status(404).json({ message : 'ID data you are looking for was not found!'})
+        if (!user) return res.status(404).json({ message : 'ID data not available!'})
 
         // ACCESS DELETE USER ( AuthorizationAuthorization )
         if (user.role === role) {
@@ -26,9 +26,9 @@ export const processDeleteUserData = async ( req, res, next ) => {
 
         // 3. remove old avatar path / file
         await __file_remove([user.avatar]).then(result => {
-                        console.log('Operation result:', result)
+                        console.log('operation result:', result)
         }).catch(error => {
-            console.error('Operation failed:', error)
+            console.error('operation failed:', error)
         })
         
         // 4. data has been verified

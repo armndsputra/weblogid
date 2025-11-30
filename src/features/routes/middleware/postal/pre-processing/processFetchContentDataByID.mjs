@@ -7,7 +7,7 @@ export const processFetchContentDataByID = async ( req, res, next) => {
     try {
 
         // 1. check id valid or not
-        if (!mongoose.Types.ObjectId.isValid(id)) return res.status(400).json({ message : 'invalid id!'})
+        if (!mongoose.Types.ObjectId.isValid(id)) return res.status(400).json({ message : 'incorrect ID entered!'})
 
         req.id = id
         next()

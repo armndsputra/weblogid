@@ -12,14 +12,14 @@ export const processDeleteContentData = async ( req, res, next ) => {
 
         // 1. check id valid or not
         const id = req.params.id
-        if (!mongoose.Types.ObjectId.isValid(id)) return res.status(400).json({ message : 'invalid id!'})
+        if (!mongoose.Types.ObjectId.isValid(id)) return res.status(400).json({ message : 'incorrect ID entered!'})
         
         // 2. Check if data exists
         const result = await Contents.findById(id)
-        if (!result) return res.status(404).json({ message : 'data not found!'})
+        if (!result) return res.status(404).json({ message : 'ID data not available!'})
 
         // MAIN ACCESS USER
-        if (req.decode.id !== result.user) return res.status(403).json({ message : 'forbidden : access is restricted!'})
+        if (req.decode.id !== result.user) return res.status(403).json({ message : 'forbidden : remove restricted access!'})
         
         // 3. delete file
         let filePaths = []

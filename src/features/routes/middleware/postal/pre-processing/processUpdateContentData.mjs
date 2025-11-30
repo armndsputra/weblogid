@@ -17,7 +17,12 @@ export const processUpdateContentData = async ( req, res, next ) => {
             return res.status(400).json({ message : 'no data provided!'})
         }
 
-        // 1. validasi ID
+        // 1. organize file paths into an array
+        if (req.files && req.files.length > 0) {
+            thumbnailPaths = req.files.map(file => file.path)
+        }
+
+        // 2. validasi ID
         if (!mongoose.Types.ObjectId.isValid(id)) {
             // remove files
             await __file_remove(thumbnailPaths).then(result => {
@@ -26,13 +31,9 @@ export const processUpdateContentData = async ( req, res, next ) => {
                     console.error('operation failed:', error)
                 })
             
-            return res.status(400).json({ message : 'invalid id!'})
+            return res.status(400).json({ message : 'incorrect ID entered!'})
         }
 
-        // 2. organize file paths into an array
-        if (req.files && req.files.length > 0) {
-            thumbnailPaths = req.files.map(file => file.path)
-        }
       
         // 3. check if data exists
         const result = await Contents.findById(id)
@@ -43,7 +44,7 @@ export const processUpdateContentData = async ( req, res, next ) => {
                 }).catch(error => {
                     console.error('operation failed:', error)
                 });
-            return res.status(404).json({ message : 'data not found!'})
+            return res.status(404).json({ message : 'ID data not available!'})
         }
 
         // MAIN ACCESS USER
@@ -54,16 +55,16 @@ export const processUpdateContentData = async ( req, res, next ) => {
                 }).catch(error => {
                     console.error('operation failed:', error)
                 });
-            return res.status(403).json({ message : 'forbidden : access is restricted!'})
+            return res.status(403).json({ message : 'forbidden : update restricted access!'})
         }
 
         // 5. validate thumbnail file count
         if (thumbnailPaths.length > 1) {
             // remove files
             await __file_remove(thumbnailPaths).then(result => {
-                    console.log('Operation result:', result)
+                    console.log('operation result:', result)
                 }).catch(error => {
-                    console.error('Operation failed:', error)
+                    console.error('operation failed:', error)
                 });
             return res.status(413).json({ message : 'only one file is allowed'})
         }
