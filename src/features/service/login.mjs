@@ -15,7 +15,7 @@ export const login = async ( req, res ) => {
             return res.status(401).json({ message : "your password isn't correct !"})
         }
 
-        // 3. set jwt and print
+        // 3. set jwt and print data
         jwt.sign({ 
             id,
             role
@@ -23,9 +23,11 @@ export const login = async ( req, res ) => {
             if (err) return console.error(err)
                 return res.status(201).json({
                     message : "you have successfully logged in",
-                    access_token : token,
-                    token_type: "bearer",
-                    expires_in: process.env.JWT_EXPIRES
+                    data : {
+                        access_token : token,
+                        token_type: "Bearer",
+                        expires_in: process.env.JWT_EXPIRES
+                    }
                 })
         })
 
@@ -33,7 +35,7 @@ export const login = async ( req, res ) => {
          // handle errors
         console.log(err)
         res.status(500).json({
-            message : 'Error system !',
+            message : 'error system!',
         })
     }
 

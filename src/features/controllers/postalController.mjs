@@ -7,13 +7,13 @@ export const fetchAllContent = async ( req, res ) => {
     try {
 
         // 1. fetch all
-        const results = await Contents.find().skip(req.data.offset).limit(req.data.limit).populate('user', 'id name').exec()
-        console.log(results)
-        // 2. print results
-        if (results) {
+        const data = await Contents.find().skip(req.data.offset).limit(req.data.limit).populate('user', 'id name').exec()
+        console.log(data)
+        // 2. print content data
+        if (data) {
             return res.status(200).json({
-                message : 'success',
-                data : results.map(e => {
+                message : 'success : content successfully displayed',
+                data : data.map(e => {
                     return {
                         id : e._id,
                         title : e.title,
@@ -30,7 +30,7 @@ export const fetchAllContent = async ( req, res ) => {
         // handle errors
         console.error(err)
         return res.status(500).json({
-            message : 'Error system !',
+            message : 'error system!',
         })
     }
 }
@@ -44,15 +44,16 @@ export const saveContent = async ( req, res ) => {
         const content = new Contents(req.data)
 
         // 2. print the results
-        const result = await content.save();
-        if (result) return res.status(201).json({
-            message : 'succeed',
-            print : {
-                user : result.user,
-                title : result.title,
-                content : result.content,
-                thumbnail : result.thumbnail,
-                created : result.created,
+        const data = await (await content.save()).populate('user', 'id name')
+        if (data) return res.status(201).json({
+            message : 'success : content created successfully',
+            data : {
+                id : data._id,
+                title : data.title,
+                content : data.content,
+                thumbnail : data.thumbnail,
+                created : data.created,
+                author : data.user,
             }
         })
        
@@ -60,7 +61,7 @@ export const saveContent = async ( req, res ) => {
         // handle errors
         console.log(err)
         return res.status(500).json({ 
-            message : 'Error system !'
+            message : 'error system!'
          })
     }
 }
@@ -73,15 +74,16 @@ export const deleteContent = async ( req, res) => {
         const id = req.data.id
 
         // 1. remove data by ID
-        const result = await Contents.findByIdAndDelete(id)
+        const data = await Contents.findByIdAndDelete(id).populate('user', 'id name')
 
-        // 2. print result data
-        if (result) {
+        // 2. print content data
+        if (data) {
             return res.status(200).json({
-                message : 'deleted',
-                deleted : {
-                    id : result._id,
-                    title : result.title
+                message : 'success : content successfully deleted',
+                data : {
+                    id : data._id,
+                    title : data.title,
+                    author : data.user,
                 }
             })
         }
@@ -90,7 +92,7 @@ export const deleteContent = async ( req, res) => {
         // handle errors
         console.error(err)
         res.status(500).json({
-            message : 'Error system !',
+            message : 'error system!',
         })
     }
 }
@@ -101,18 +103,18 @@ export const updateContent = async ( req, res) => {
     try {
         
         // 1. update data by ID
-        const result = await Contents.findByIdAndUpdate(req.id, req.data, { new: true })
+        const data = await Contents.findByIdAndUpdate(req.id, req.data, { new: true }).populate('user', 'id name')
         
-        // 2. print the result
+        // 2. print the data
         return res.status(201).json({
-            message : 'success',
+            message : 'success : content successfully updated',
             data : {
-                id : result._id,
-                user : result.user,
-                title : result.title,
-                content : result.content,
-                thumbnail : result.thumbnail,
-                created : result.created,
+                id : data._id,
+                title : data.title,
+                content : data.content,
+                thumbnail : data.thumbnail,
+                created : data.created,
+                author : data.user,
             }
         })
       
@@ -120,7 +122,7 @@ export const updateContent = async ( req, res) => {
         // handle errors
         console.error(err)
         res.status(500).json({
-            message : 'Error system !',
+            message : 'error system!',
         })
     }
 
@@ -134,26 +136,26 @@ export const fetchContentByID = async ( req, res ) => {
     try {
 
         // 1. fetch data by ID
-        const result = await Contents.findById({_id : id}).exec()
-        console.log(result)
+        const data = await Contents.findById({_id : id}).populate('user', 'id name').exec()
+        console.log(data)
 
         // 2. print data
-        if (result) return res.status(200).json({
-            message : 'success',
+        if (data) return res.status(200).json({
+            message : 'success : content is displayed by ID',
             data : {
-                id : result._id,
-                user : result.user,
-                title : result.title,
-                content : result.content,
-                thumbnail : result.thumbnail,
-                created : result.created,
+                id : data._id,
+                title : data.title,
+                content : data.content,
+                thumbnail : data.thumbnail,
+                created : data.created,
+                author : data.user,
             }
         })
         
         // 2.1 if data not found
-        if (!result) return res.status(200).json({
-            message : 'success',
-            print : []
+        if (!data) return res.status(200).json({
+            message : 'failure : content not found!',
+            data : []
         })
 
         return
@@ -162,7 +164,7 @@ export const fetchContentByID = async ( req, res ) => {
         // handle errors
         console.error(err)
         res.status(500).json({
-            message : 'Error system !',
+            message : 'error system!',
         })
     }
 
@@ -176,27 +178,30 @@ export const fetchContentByKeywords = async ( req, res, next ) => {
     try {
 
         // 1. fetch data by keywords
-        const result = await Contents.find({$or: [{ title: { $regex: keywords, $options: 'i' }}]})
+        const data = await Contents.find({$or: [{ title: { $regex: keywords, $options: 'i' }}]}).skip(req.data.offset).limit(req.data.limit).populate('user', 'id name')
+        console.log(data.length)
+
+        if (data.length === 0) {
+            return res.status(201).json({
+                message : 'failure : content not found!',
+                data : []
+            })
+        }
 
         // 2. print data
-        if (result) {
+        if (data) {
             return res.status(201).json({
-                message : 'success',
-                data : result.map(e => {
+                message : 'success : content is displayed by keywords',
+                data : data.map(e => {
                     return {
                         id : e._id,
                         title : e.title,
-                        user : e.user,
                         content : e.content,
                         thumbnail : e.thumbnail,
                         created : e.created,
+                        author : e.user,
                     }
                 })
-            })
-        } else {
-            return res.status(201).json({
-                message : 'not found!',
-                print : []
             })
         }
 

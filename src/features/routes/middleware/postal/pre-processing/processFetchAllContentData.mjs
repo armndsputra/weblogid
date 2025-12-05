@@ -34,6 +34,9 @@ export const processFetchAllContentData = async ( req, res, next ) => {
                 error: 'limit & offset have to number and positive number!'
             });
         }
+        return res.status(500).json({
+            message : 'error system!',
+        })
         
     }
 
