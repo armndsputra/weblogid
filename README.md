@@ -1,5 +1,5 @@
 # `O A S E` 
-*a framework for creating a simple weblog. such as posting articles, stories, and tutorials*
+*oase/oasis in Indonesian is a remote, fertile area. depiction of a small framework used to create a simple weblog*
 
 | Layer | Technology |
 |-|-|
@@ -15,7 +15,7 @@
  | Role  | Permissions |
 |-------|-------------|
 | ADMIN | delete user, fetch all user, fetch user by ID |
-| USER  | update user, post content, update content |
+| USER  | update user, post content, update content, fetch all content by user ID |
 | GENERAL  | fetch all contents, fetch content by id, fetch content by keywords |
 
 ---
@@ -75,7 +75,7 @@
 ##### Request Body :
 ```json
 {
-    "email" : "adipati@mail.com",
+    "email" : "adipati@gmail.com",
     "password" : "admin"
 }
 ```
@@ -233,8 +233,8 @@
 ```json
 {
   "title" : "",
-  "content" : "dikampung yang sepi",
-  "thumbnail" : "image"
+  "content" : "sebuah kampung tradisional dipinggirian kota yogyakarta",
+  "thumbnail" : "image.jpg"
 }
 ```
 ##### Response Success :
@@ -245,7 +245,7 @@
     "data": {
         "id": "6934d128ecdef486863838c4",
         "title": "pulang",
-        "content": "dikampung yang sepi",
+        "content": "sebuah kampung tradisional dipinggirian kota yogyakarta",
         "thumbnail": "uploads/contents/2025-12-07T01:57:42.275Z-538175537.jpeg",
         "created": "2025-12-07T00:58:16.444Z",
         "author": {
@@ -346,9 +346,12 @@
 ---
 
 ## Other Features
-***ADMIN :***
-- [ ] `GET /` - 
+> ***ADMIN :***
+- [ ] `GET /`
 
+> ***USER :***
+- [ ] `GET /postal/user` - fetch all content by user ID
+- [ ] `GET /comment/user` - fetch all comment by user ID
   
-***USER :***
-- [ ] `GET /postal/id_user` - fetch all content by user ID 
+> ***GENERAL :***
+- [ ] `GET /` 

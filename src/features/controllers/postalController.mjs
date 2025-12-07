@@ -160,7 +160,7 @@ export const fetchContentByID = async ( req, res ) => {
             data : {
                 id : data._id,
                 title : data.title,
-                content : "**********************",
+                content : data.content,
                 thumbnail : data.thumbnail,
                 created : data.created,
                 author : data.user,
