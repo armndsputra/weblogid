@@ -1,5 +1,5 @@
 # `O A S E` 
-*oase/oasis in Indonesian is a remote, fertile area. depiction of a small framework used to create a simple weblog*
+*oase/oasis in Indonesian is a remote and fertile area. depiction of a small framework used to create a simple weblog*
 
 | Layer | Technology |
 |-|-|
