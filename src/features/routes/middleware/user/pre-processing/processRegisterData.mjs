@@ -61,7 +61,7 @@ export const processRegisterData = async ( req, res, next ) => {
             birthday, 
             created : new Date(), 
             avatar : 'default',
-            role : 'user'
+            role : 'guest'
         }
 
         req.data = data

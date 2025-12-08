@@ -2,14 +2,15 @@ import  { Router }  from 'express'
 const router = Router()
 
 // controllers
-import { fetchAllUser, deleteUser, updateUser, fetchUserByID } from '../controllers/userController.mjs'
+import { fetchAllUser, deleteUser, updateUser, fetchUserByID, updateUserRole } from '../controllers/userController.mjs'
 
 // middleware
 import { 
     processDeleteUserData,
     processFetchAllUserData, 
     processUpdateUserData, 
-    processFetchUserDataByID 
+    processFetchUserDataByID,
+    processUpdateUserRoleData
 } from './middleware/index.mjs'
 
 // service
@@ -33,5 +34,8 @@ router.patch('/:id',updateAccessUser, upload.array('avatar'), processUpdateUserD
 
 // delete user
 router.delete('/:id', deleteAccessUser, processDeleteUserData, deleteUser)
+
+// update user role
+router.patch('/role/:id', mainAccessAdmin, processUpdateUserRoleData, updateUserRole)
 
 export default router

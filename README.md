@@ -25,12 +25,13 @@
 - [x] `GET /user` - fetch all user [GO](#fetch-all-user)
 - [x] `DELETE /user/id_user` - delete user by ID [GO](#delete-user-by-id)
 - [x] `GET /user/id_user` - fetch user by ID [GO](#fetch-user-by-id)
+- [x] `PATCH /user/role/id_user` - update user role by ID [GO](#update-user-role-by-id)
 
 > ***USER FEATURE :***
 - [x] `POST /postal` - posting content [GO](#posting-content)
 - [x] `DELETE /postal/id_content` - delete content [GO](#delete-content)
 - [x] `PATCH /postal/id_content` - update content [GO](#update-content)
-- [ ] `GET /postal/user` - fetch all content by user ID
+- [ ] `GET /postal/user` - fetch all content by user ID [GO](guide/doc.md#fetch-all-content-by-user-id)
 - [ ] `GET /comment/user` - fetch all comment by user ID
 - [ ] `GET /comment/reply` - reply comment
 
@@ -370,7 +371,29 @@
     ]
 }
 ```
+<br><br>
+
+> ### Update User Role By ID
+- **Endpoint** : `PATCH /user/role/id_user`
+##### Request Body :
+```json
+{
+  " role" : "user"
+}
+```
+##### Response Success : 
+```json
+{
+    "success": true,
+    "message": "success : user role successfully updated",
+    "data": {
+        "user": "adipati suryanegara",
+        "role": "user",
+        "created": "2025-12-07T00:45:39.880Z"
+    }
+}
+```
 
 <br>
 
-[More Documentation](guide/)
+[More Documentation](guide/doc.md)

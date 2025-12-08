@@ -200,3 +200,36 @@ export const fetchUserByID = async ( req, res ) => {
     }
 
 }
+
+// ---------------------------------------------------------------
+// update user role
+// ---------------------------------------------------------------
+export const updateUserRole = async ( req, res ) => {
+
+    try {
+
+        const { id, role } = req.data
+
+        // 1. update user role by ID
+        const data = await Users.findByIdAndUpdate(id, { role : role }, { new: true })
+
+        // 2. print the result
+        return res.status(201).json({
+            success : true,
+            message : 'success : user role successfully updated',
+            data : {
+                user : data.name,
+                role : data.role,
+                created : data.created,
+            }
+        })
+
+    } catch (err) {
+        // handle errors
+        console.log(err)
+        return res.status(500).json({ 
+            message : 'error system !'
+         })
+    }
+
+}
