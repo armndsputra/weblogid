@@ -1,6 +1,6 @@
 import mongoose from "mongoose"
 
-import Contents from '../../../models/postalModel.mjs'
+import Contents from '../../../models/postModel.mjs'
 
 export const proccessCommentData = async ( req, res, next) => {
 

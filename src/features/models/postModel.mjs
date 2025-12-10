@@ -6,7 +6,7 @@ const setSchema = new Schema({
     title : { type : String, required: true },
     content : { type : String, required: true },
     thumbnail : { type : String, required: true },
-    created : { type : Date, required : true },
+    createdAt : { type : Date, required : true },
 })
 
-export default mongoose.model('contents', setSchema);
+export default mongoose.model('posts', setSchema);

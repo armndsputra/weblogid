@@ -1,7 +1,7 @@
 import mongoose from "mongoose"
 
-// Model
-import Contents from '../../../models/postalModel.mjs'
+// model
+import Post from '../../../models/postModel.mjs'
 
 // helper
 import { __file_remove } from "../../../../helpers/__file_remove.mjs"
@@ -12,14 +12,23 @@ export const processDeleteContentData = async ( req, res, next ) => {
 
         // 1. check id valid or not
         const id = req.params.id
-        if (!mongoose.Types.ObjectId.isValid(id)) return res.status(400).json({ message : 'incorrect ID entered!'})
+        if (!mongoose.Types.ObjectId.isValid(id)) return res.status(400).json({ 
+            success : false,
+            message : 'incorrect ID entered!'
+        })
         
         // 2. Check if data exists
-        const result = await Contents.findById(id)
-        if (!result) return res.status(404).json({ message : 'ID data not available!'})
+        const result = await Post.findById(id)
+        if (!result) return res.status(404).json({ 
+            success : false,
+            message : 'ID data not available!'
+        })
 
         // MAIN ACCESS USER
-        if (req.decode.id !== result.user.toString()) return res.status(403).json({ message : 'forbidden : remove restricted access!'})
+        if (req.decode.id !== result.user.toString()) return res.status(403).json({ 
+            success : false,
+            message : 'forbidden : remove restricted access!'
+        })
         
         // 3. delete file
         let filePaths = []
@@ -37,7 +46,8 @@ export const processDeleteContentData = async ( req, res, next ) => {
     } catch (err) {
         console.error(err)
         res.status(500).json({
-            message : 'Error system !',
+            success : false,
+            message : 'error processing delete content data!',
         })
     }
 

@@ -1,10 +1,11 @@
+// npm packages
 import { body, validationResult } from 'express-validator'
 
-// Helper
+// helper
 import { __file_remove } from "../../../../helpers/__file_remove.mjs"
 
-// Model
-import Contents from '../../../models/postalModel.mjs'
+// model
+import Post from '../../../models/postModel.mjs'
 
 export const processContentData = async ( req, res, next ) => {
 
@@ -34,10 +35,11 @@ export const processContentData = async ( req, res, next ) => {
                     console.log('operation result:', result)
                 }).catch(error => {
                     console.error('operation failed:', error)
-                });
+                })
 
             console.error('validation errors :', errors.array())
             return res.status(422).json({
+                success: false,
                 message: 'validation failed!',
                 errors: errors.array(),
                 receivedData: req.body
@@ -53,17 +55,23 @@ export const processContentData = async ( req, res, next ) => {
                 }).catch(error => {
                     console.error('Operation failed:', error)
                 });
-            return res.status(413).json({ message : 'only one file is allowed'})
+            return res.status(413).json({ 
+                success : false,
+                message : 'only one file is allowed'
+            })
         }
 
         // 4. Check if a file was uploaded
         if (!req.files || req.files.length === 0) {
             console.error('file has not been uploaded!')
-            return res.status(400).json({ message: 'file is required!' })
+            return res.status(400).json({ 
+                success : false,
+                message: 'file is required!' 
+            })
         }
 
         // 5. check if the data already exists
-        const title = await Contents.findOne({ title : req.body.title})
+        const title = await Post.findOne({ title : req.body.title})
         console.table(title)
         if (title) { 
             // remove files
@@ -72,13 +80,16 @@ export const processContentData = async ( req, res, next ) => {
                 }).catch(error => {
                     console.error('operation failed:', error)
                 })
-            return res.status(404).json({ message : 'the title entered is the same'})
+            return res.status(404).json({ 
+                success : false,
+                message : 'the title entered is the same'
+            })
         }
 
         // 6. The result of the data sent to the request body
         const data = {
             user : idUser,
-            created : new Date(),
+            createdAt : new Date(),
             title : req.body.title,
             content : req.body.content,
             thumbnail : thumbnailPaths[0]
@@ -94,7 +105,8 @@ export const processContentData = async ( req, res, next ) => {
         // handle errors
         console.log(err)
         res.status(500).json({
-            message : 'Error system !',
+            success : false,
+            message : 'error processing insert content data!',
         })
     }
 }

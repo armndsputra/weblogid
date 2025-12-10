@@ -21,14 +21,20 @@ export const processFetchContentDataByKeywords = async ( req, res, next ) => {
       
        const data = await _page_breaker( limit, offset)
 
-        if (!req.body) return res.status(400).json({ message : 'keyword is required!'})
+        if (!req.body) return res.status(400).json({ 
+            success : false,
+            message : 'keyword is required!'
+        })
 
         // 1. fetch data by keywords
         const { keywords } = req.body
         
         // 2. check if length <= 0
         if (keywords.length <= 0) {
-            return res.status(404).json({ message : 'keyword has not been entered!'})
+            return res.status(404).json({ 
+                success : false,
+                message : 'keyword has not been entered!'
+            })
         }
         
         // 3. data has been verified
@@ -41,11 +47,13 @@ export const processFetchContentDataByKeywords = async ( req, res, next ) => {
         console.log(err)
         if (err.message === 'NOT_NUMBER' || 'NEGATIVE_VALUES_NOT_ALLOWED') {
             return res.status(400).json({
+                success : false,
                 error: 'limit & offset have to number and positive number!'
             });
         }
         return res.status(500).json({
-            message : 'error system!',
+            success : false,
+            message : 'error processing fetch content data by keywords!',
         })
     }
 

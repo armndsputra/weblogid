@@ -1,6 +1,8 @@
 import  { Router }  from 'express'
 const router = Router()
 import multer from 'multer'
+import fs from 'fs'
+import path from 'path'
 
 // controllers
 import { 
@@ -10,16 +12,27 @@ import {
   updateContent, 
   fetchContentByID,
   fetchContentByKeywords
-} from '../controllers/postalController.mjs'
+} from '../controllers/postController.mjs'
+
+async function ensureUploadDir() {
+    const dir = path.join(process.cwd(), 'uploads/posts/')
+    try {
+      await fs.promises.access(dir)
+    } catch (error) {
+      await fs.promises.mkdir(dir, { recursive: true })
+    }
+}
+ensureUploadDir()
 
 
 // configure storage for multer
 const storage = multer.diskStorage({
+
       destination: (req, file, cb) => {
-        cb(null, 'uploads/contents/'); // specify the upload directory
+        cb(null, 'uploads/posts/') // specify the upload directory
       },
       filename: (req, file, cb) => {
-        cb(null, new Date().toISOString()+'-'+Math.round(Math.random() * 1E9)+'.'+file.mimetype.split('/')[1]); // rename the file
+        cb(null, new Date().toISOString()+'-'+Math.round(Math.random() * 1E9)+'.'+file.mimetype.split('/')[1]) // rename the file
       }
   });
 
@@ -71,6 +84,8 @@ router.post('/keywords', processFetchContentDataByKeywords, fetchContentByKeywor
 
 // error handling
 router.use((err, req, res, next) => {
+
+    // console.error(err.message)
 
     // // Error Handling file size
     if (err instanceof multer.MulterError) {

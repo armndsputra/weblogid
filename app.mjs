@@ -7,11 +7,11 @@ const {urlencoded , json} = pkg
 import 'dotenv/config'
 
 // routes
-import postal from'./src/features/routes/postalRoute.mjs'
+import post from'./src/features/routes/postRoute.mjs'
 import user from'./src/features/routes/userRoute.mjs'
 import register from './src/features/routes/registerRoute.mjs'
 import login from './src/features/routes/loginRoute.mjs'
-import comment from './src/features/routes/commentRoute.mjs'
+import commenter from './src/features/routes/commenterRoute.mjs'
 
 // middlewares  
 app.use(morgan('dev'))
@@ -19,12 +19,11 @@ app.use(urlencoded({ extended: true }))
 app.use(json())
 
 // routes
-app.use('/postal', postal)
-app.use('/commenter', comment)
+app.use('/api/post', post) // post route
+app.use('/api/commenter', commenter) // commenter route
 
-app.use('/user', user)
-app.use('/login', login)
-
+app.use('/api/account/user', user) // user route
+app.use('/api/account/login', login) // login route
 app.use('/api/account/register', register) // register route
 
 // error handling
@@ -35,7 +34,7 @@ app.use((req, res, next) => {
 })
 
 app.use((err, req, res, next) => {
-    // console.log(err)
+    console.log(err)
     console.error(err.message)
     // returndd
     if (err.message) {

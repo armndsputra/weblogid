@@ -1,5 +1,5 @@
 // Model
-import Contents from '../models/postalModel.mjs'
+import Post from '../models/postModel.mjs'
 
 // --------------------------------------------------------------------------------------
 // fatch all content data
@@ -9,7 +9,7 @@ export const fetchAllContent = async ( req, res ) => {
     try {
 
         // 1. fetch all
-        const data = await Contents.find().skip(req.data.offset).limit(req.data.limit).populate('user', 'id name').exec()
+        const data = await Post.find().skip(req.data.offset).limit(req.data.limit).populate('user', 'id name').exec()
         console.log(data)
         // 2. print content data
         if (data) {
@@ -22,7 +22,7 @@ export const fetchAllContent = async ( req, res ) => {
                         title : e.title,
                         content : "**********************",
                         thubnail : e.thumbnail,
-                        created : e.created,
+                        created : e.createdAt,
                         author : e.user,
                     }
                 })
@@ -33,7 +33,8 @@ export const fetchAllContent = async ( req, res ) => {
         // handle errors
         console.error(err)
         return res.status(500).json({
-            message : 'error system!',
+            success : false,
+            message : 'error processing fetch all content data!',
         })
     }
 }
@@ -46,7 +47,7 @@ export const saveContent = async ( req, res ) => {
     try {
 
         // 1. save a single document
-        const content = new Contents(req.data)
+        const content = new Post(req.data)
 
         // 2. print the results
         const data = await (await content.save()).populate('user', 'id name')
@@ -58,7 +59,7 @@ export const saveContent = async ( req, res ) => {
                 title : data.title,
                 content : data.content,
                 thumbnail : data.thumbnail,
-                created : data.created,
+                createdAt : data.createdAt,
                 author : data.user,
             }
         })
@@ -67,7 +68,8 @@ export const saveContent = async ( req, res ) => {
         // handle errors
         console.log(err)
         return res.status(500).json({ 
-            message : 'error system!'
+            success : false,
+            message : 'error processing insert content data!'
          })
     }
 }
@@ -82,7 +84,7 @@ export const deleteContent = async ( req, res) => {
         const id = req.data.id
 
         // 1. remove data by ID
-        const data = await Contents.findByIdAndDelete(id).populate('user', 'id name')
+        const data = await Post.findByIdAndDelete(id).populate('user', 'id name')
 
         // 2. print content data
         if (data) {
@@ -101,7 +103,8 @@ export const deleteContent = async ( req, res) => {
         // handle errors
         console.error(err)
         res.status(500).json({
-            message : 'error system!',
+            success : false,
+            message : 'error processing delete content data!',
         })
     }
 }
@@ -114,7 +117,7 @@ export const updateContent = async ( req, res) => {
     try {
         
         // 1. update data by ID
-        const data = await Contents.findByIdAndUpdate(req.id, req.data, { new: true }).populate('user', 'id name')
+        const data = await Post.findByIdAndUpdate(req.id, req.data, { new: true }).populate('user', 'id name')
         
         // 2. print the data
         return res.status(201).json({
@@ -150,7 +153,7 @@ export const fetchContentByID = async ( req, res ) => {
     try {
 
         // 1. fetch data by ID
-        const data = await Contents.findById({_id : id}).populate('user', 'id name').exec()
+        const data = await Post.findById({_id : id}).populate('user', 'id name').exec()
         console.log(data)
 
         // 2. print data
@@ -169,6 +172,7 @@ export const fetchContentByID = async ( req, res ) => {
         
         // 2.1 if data not found
         if (!data) return res.status(200).json({
+            success : true,
             message : 'failure : content not found!',
             data : []
         })
@@ -179,7 +183,8 @@ export const fetchContentByID = async ( req, res ) => {
         // handle errors
         console.error(err)
         res.status(500).json({
-            message : 'error system!',
+            success : false,
+            message : 'error processing fetch content data by ID!',
         })
     }
 
@@ -195,7 +200,7 @@ export const fetchContentByKeywords = async ( req, res, next ) => {
     try {
 
         // 1. fetch data by keywords
-        const data = await Contents.find({$or: [{ title: { $regex: keywords, $options: 'i' }}]}).skip(req.data.offset).limit(req.data.limit).populate('user', 'id name')
+        const data = await Post.find({$or: [{ title: { $regex: keywords, $options: 'i' }}]}).skip(req.data.offset).limit(req.data.limit).populate('user', 'id name')
         console.log(data.length)
 
         if (data.length === 0) {
@@ -217,7 +222,7 @@ export const fetchContentByKeywords = async ( req, res, next ) => {
                         title : e.title,
                         content : "**********************",
                         thumbnail : e.thumbnail,
-                        created : e.created,
+                        createdAt : e.createdAt,
                         author : e.user,
                     }
                 })
@@ -228,7 +233,8 @@ export const fetchContentByKeywords = async ( req, res, next ) => {
         // handle errors
         console.error(err)
         res.status(500).json({
-            message : 'error system!',
+            success : false,
+            message : 'error processing fetch content data by keywords!',
         })
     }
 

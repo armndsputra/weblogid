@@ -4,7 +4,7 @@ import mongoose from "mongoose"
 import { __file_remove } from "../../../../helpers/__file_remove.mjs"
 
 // model
-import Contents from '../../../models/postalModel.mjs'
+import Post from '../../../models/postModel.mjs'
 
 export const processUpdateContentData = async ( req, res, next ) => {
 
@@ -14,7 +14,10 @@ export const processUpdateContentData = async ( req, res, next ) => {
     try {
 
         if (!req.body) {
-            return res.status(400).json({ message : 'no data provided!'})
+            return res.status(400).json({ 
+                success : false,
+                message : 'no data provided!'
+            })
         }
 
         // 1. organize file paths into an array
@@ -31,12 +34,15 @@ export const processUpdateContentData = async ( req, res, next ) => {
                     console.error('operation failed:', error)
                 })
             
-            return res.status(400).json({ message : 'incorrect ID entered!'})
+            return res.status(400).json({ 
+                success : false,
+                message : 'incorrect ID entered!'
+            })
         }
 
       
         // 3. check if data exists
-        const result = await Contents.findById(id)
+        const result = await Post.findById(id)
         if (!result) {
             // remove files
             await __file_remove(thumbnailPaths).then(result => {
@@ -44,7 +50,10 @@ export const processUpdateContentData = async ( req, res, next ) => {
                 }).catch(error => {
                     console.error('operation failed:', error)
                 });
-            return res.status(404).json({ message : 'ID data not available!'})
+            return res.status(404).json({ 
+                success : false,
+                message : 'ID data not available!'
+            })
         }
 
         // 4. validate access user
@@ -56,7 +65,10 @@ export const processUpdateContentData = async ( req, res, next ) => {
                 }).catch(error => {
                     console.error('operation failed:', error)
                 });
-            return res.status(403).json({ message : 'forbidden : update restricted access!'})
+            return res.status(403).json({ 
+                success : false,
+                message : 'forbidden : update restricted access!'
+            })
         }
 
         // 5. validate thumbnail file count
@@ -67,7 +79,10 @@ export const processUpdateContentData = async ( req, res, next ) => {
                 }).catch(error => {
                     console.error('operation failed:', error)
                 });
-            return res.status(413).json({ message : 'only one file is allowed'})
+            return res.status(413).json({ 
+                success : false,
+                message : 'only one file is allowed'
+            })
         }
 
         // 6. Handle thumbnail update
@@ -103,7 +118,8 @@ export const processUpdateContentData = async ( req, res, next ) => {
         // handle errors
         console.error(err)
         res.status(500).send({ 
-            message: 'error system!' 
+            success : false,
+            message: 'error processing update content data!' 
         })
     }
 

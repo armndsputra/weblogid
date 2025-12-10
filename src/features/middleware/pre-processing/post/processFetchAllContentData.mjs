@@ -31,11 +31,13 @@ export const processFetchAllContentData = async ( req, res, next ) => {
         // console.error(err)
         if (err.message === 'NOT_NUMBER' || 'NEGATIVE_VALUES_NOT_ALLOWED') {
             return res.status(400).json({
+                success : false,
                 error: 'limit & offset have to number and positive number!'
             });
         }
         return res.status(500).json({
-            message : 'error system!',
+            success : false,
+            message : 'error processing fetch all content data!',
         })
         
     }

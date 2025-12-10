@@ -1,6 +1,8 @@
 import  { Router }  from 'express'
 const router = Router()
 import multer from 'multer'
+import fs from 'fs'
+import path from 'path'
 
 // controllers
 import { fetchAllUser, deleteUser, updateUser, fetchUserByID, updateUserRole } from '../controllers/userController.mjs'
@@ -21,12 +23,21 @@ import { mainAccessUser } from '../middleware/service/mainAccessUser.mjs'
 // route helpers
 // import { upload } from './middleware/user/helpers/_set_multer.mjs'
 
-
+async function ensureUploadDir() {
+    const dir = path.join(process.cwd(), 'uploads/users/')
+    try {
+      await fs.promises.access(dir)
+    } catch (err) {
+      console.log(err)
+      await fs.promises.mkdir(dir, { recursive: true })
+    }
+}
+ensureUploadDir()
 
 // configure storage for multer
 const storage = multer.diskStorage({
       destination: (req, file, cb) => {
-        cb(null, 'uploads/users/'); // specify the upload directory
+        cb(null, 'uploads/users/') // specify the upload directory
       },
       filename: (req, file, cb) => {
         cb(null, new Date().toISOString()+'-'+Math.round(Math.random() * 1E9)+'.'+file.mimetype.split('/')[1]); // rename the file
