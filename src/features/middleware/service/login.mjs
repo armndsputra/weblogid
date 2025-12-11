@@ -12,7 +12,10 @@ export const login = async ( req, res ) => {
         // 2. check password and tempPassword
         const verifyPasword = await bcrypt.compare(tempPassword, password)
         if (!verifyPasword) {
-            return res.status(401).json({ message : "your password isn't correct !"})
+            return res.status(401).json({ 
+                success : false,
+                message : "your password isn't correct !"
+            })
         }
 
         // 3. set jwt and print data

@@ -21,13 +21,17 @@ export const loginAccess = async (req, res ,next) => {
                 return next()
             }
             // 3.2 if token actice don't next to login page
-            return res.status(200).json({ message : 'access token is active and valid', user: decode })
+            return res.status(200).json({ 
+                success: true,
+                message : 'access token is active and valid', user: decode 
+            })
         })
 
     } catch (err) {
         console.error(err)
         return res.status(500).json({
-            message : 'error system!',
+            success: false,
+            message : 'error in login access process!',
         })
     }
 }

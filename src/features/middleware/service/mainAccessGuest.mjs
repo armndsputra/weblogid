@@ -9,7 +9,10 @@ export const mainAccessGuest = async ( req, res, next ) => {
                 
         // 2. check if token is undifind
         if (!token) {
-            return res.status(403).json({ message : 'forbidden : authentication required!'})
+            return res.status(403).json({ 
+                success: false,
+                message : 'forbidden : authentication required!'
+            })
         }
 
         // 3. verify token jwt
@@ -19,6 +22,7 @@ export const mainAccessGuest = async ( req, res, next ) => {
                 // console.error(err)
                 console.error('token verification failed : ', err.message)
                     return res.status(400).json({
+                        success: false,
                         message : 'forbidden : access token has been expired!'
                     })
             }
@@ -27,14 +31,18 @@ export const mainAccessGuest = async ( req, res, next ) => {
             if (decode.role === 'guest') {
                 req.decode = decode
                 return next()
-            } else return res.status(403).json({ message : 'forbidden : access is restricted!'})
+            } else return res.status(403).json({ 
+                success: false,
+                message : 'forbidden : access is restricted!'
+            })
         })
 
 
     } catch (err) {
         console.error(err)
         return res.status(500).json({
-            message : 'error system!',
+            success : false,
+            message : 'error in access guest process!',
         })
     }
 

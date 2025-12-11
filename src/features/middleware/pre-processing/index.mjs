@@ -17,3 +17,4 @@ export * from './user/processUpdateUserRoleData.mjs'
 
 // comment management
 export * from './commenter/proccessCommentData.mjs'
+export * from './commenter/processFetchAllCommentsByPostId.mjs'
