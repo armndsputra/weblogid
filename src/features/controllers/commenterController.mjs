@@ -36,7 +36,7 @@ export const fetchCommenterByPostId = async (req, res) => {
     try {
         const postId = req.data;
 
-        const comments = await Commenter.find({ content : postId })
+        const comments = await Commenter.find({ content : postId }).skip(req.pagination.offset).limit(req.pagination.limit).sort({ createdAt : -1 });   
 
         res.status(200).json({
             success : true,

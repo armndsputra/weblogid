@@ -1,10 +1,13 @@
 import mongoose from 'mongoose';
 
 import Post from '../../../models/postModel.mjs';
+import { __page_breaker } from '../../../../helpers/__page_breaker.mjs'
 
 export const processFetchAllCommentsByPostId = async (req, res, next) => {
 
     try {
+
+        const { limit, offset } = req.query 
 
         const postId = req.params.id;
         const userId= req.decode.id
@@ -23,6 +26,9 @@ export const processFetchAllCommentsByPostId = async (req, res, next) => {
             message : 'incorrect ID entered!'
         })
 
+        // cek value query
+        const pagination = await __page_breaker( limit, offset )
+
         // Check if post exists and belongs to the user
         const post = await Post.findById(postId);
 
@@ -36,11 +42,19 @@ export const processFetchAllCommentsByPostId = async (req, res, next) => {
 
         // NEXT MIDDLEWARE
         req.data = postId
+        req.pagination = pagination
         next()
 
 
     } catch (err) {
         console.error(err)
+        if (err.message === 'NOT_NUMBER' || 'NEGATIVE_VALUES_NOT_ALLOWED') {
+            return res.status(400).json({
+                success : false,
+                message : 'invalid query parameter!',
+                error: 'limit & offset have to number and positive number!'
+            });
+        }
         return res.status(500).json({ 
             success: false,
             message : 'error in fetch comment by postId pre processing', 

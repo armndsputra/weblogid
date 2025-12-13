@@ -33,7 +33,7 @@
 - [x] `DELETE /api/postal/id_content` - delete one content by ID [GO](#delete-one-content-by-id)
 - [x] `PATCH /api/post/id_content` - update one content by ID [GO](#update-content)
 - [ ] `GET /api/post/user` - fetch all user content 
-- [x] `GET /api/commenter/id_content` - fetch all commenter by ID
+- [x] `GET /api/commenter/id_content/?limit=2&offset=0` - fetch all commenter by ID [GO](guide/doc.md#fetch-all-commenter-by-id)
 - [ ] `GET /api/commenter/reply` - reply commenter
 
 > ***GUEST***
