@@ -24,7 +24,7 @@
 
   <br><br>
 
-  > ### Fetch All Commneter by ID
+  > ### Fetch All Commenter by ID
 - **Endpoint** : `GET /api/commenter/id_content?limit=2&offset=0`
 - [Return to the link list](../README.md#link-list-)
 
