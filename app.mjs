@@ -13,10 +13,15 @@ import register from './src/features/routes/registerRoute.mjs'
 import login from './src/features/routes/loginRoute.mjs'
 import commenter from './src/features/routes/commenterRoute.mjs'
 
+import trafficMonitoring from './src/features/routes/trafficMonitoringRoute.mjs'
+
 // middlewares  
 app.use(morgan('dev'))
 app.use(urlencoded({ extended: true }))
 app.use(json())
+
+// traffic monitoring middleware
+app.use(trafficMonitoring)
 
 // routes
 app.use('/api/post', post) // post route
