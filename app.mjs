@@ -40,8 +40,8 @@ app.use((req, res, next) => {
 })
 
 app.use((err, req, res, next) => {
-    console.log(err)
-    console.error(err.message)
+    // console.log(err)
+    // console.error(err.message)
     // returndd
     if (err.message) {
         return res.status(err.status || 500).json({
@@ -49,9 +49,9 @@ app.use((err, req, res, next) => {
             // message : 'Enter the image file key correctly as "thumbnail"'
             message : err.message})
     }
-    res.status(err.status || 500).json({
+    return res.status(err.status || 500).json({
         // message : err.message,
-        message: 'error system!'
+        message: 'error in processing your request',
     })
 })
 

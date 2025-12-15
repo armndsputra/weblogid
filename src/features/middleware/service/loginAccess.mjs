@@ -3,6 +3,8 @@ import jwt from 'jsonwebtoken'
 export const loginAccess = async (req, res ,next) => {
 
     try {
+
+        // return
         
         // 1. fetch token request header
         const token = req.header('Authorization')?.replace('Bearer ', '')

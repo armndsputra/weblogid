@@ -1,92 +1,53 @@
 import  { Router }  from 'express'
 const router = Router()
 import jwt from 'jsonwebtoken'
+import chalk from 'chalk';
 
-import { saveTrafficLog } from '../middleware/service/trafficLog/trafficManagement.mjs'
+import { TrafficVisitor } from '../middleware/service/trafficLog/TrafficVisitor.mjs'
+import { RateLimiter } from '../middleware/service/trafficLog/RateLimiter.mjs'
 
-class trafficVisitor {
 
-    constructor(maxSize = 12) {
-        this.maxSize = maxSize
-        this.data = []
-        this.process = false
-    }
-
-    async add(visitor) {
-        if (this.process) {
-            // wait until the process is released
-            console.log('waiting for lock to be released...')
-            return new Promise((resolve) => {
-                const check = setInterval(() => {
-                    if (!this.process) {
-                        clearInterval(check)
-                        this.add(visitor).then(resolve)
-                    }
-                }, 10)
-            })
-        }
-
-        this.process = true
-
-        try {
-            
-            this.data.push(visitor)
-            if (this.data.length > this.maxSize) {
-                this.data = this.data.slice(-this.maxSize / 2)
-                
-            }
-
-        } finally {
-
-            this.process = false
-
-        }
-        
-    }
-
-    getAll() {
-        return this.data
-    }
-
-    clear() {
-        return this.data = []
-    }
-
-    getSize() {
-        return this.data.length
-    }
-
-    getNewest() {
-        return this.data[this.data.length - 1]
-    }
-
-}
-
-const trafficData = new trafficVisitor(10)
+const rateLimiter = new RateLimiter(60000, 10) // 100 requests per minute
+const trafficData = new TrafficVisitor(10)
 
 router.use(async(req, res, next) => {
 
     try {
 
+        const clientIp = req.ip || req.socket.remoteAddress || req.headers['x-forwarded-for']
+        // console.log('Client IP:', clientIp)
+
+        console.log('Current rate limiter state:', rateLimiter.showRequests())
+
+        // console.log(5 <= 0) // false
+        // console.log(rateLimiter.check(clientIp))
+        if (!rateLimiter.check(clientIp)) {
+            console.warn(chalk.red(`Rate limit exceeded for IP: ${clientIp}`))
+            // return res.status(429).json({ error: 'Too many requests. Please try again later.' })
+            return next()
+        }
+
+
+        let user = { id: 'unknown', username: 'unknown' }
         const token = req.header('Authorization')?.replace('Bearer ', '')
-
-        let userId = []
-        let username = []
-
-        jwt.verify(token, process.env.JWT_KEY, function(err, decoded) {
-            if (decoded) {
-                userId = decoded.id
-                username = decoded.username
-            } else {
-                userId = 'unknown'
-                username = 'unknown'
+        
+        if (token && process.env.JWT_KEY) {
+            try {
+                const decoded = jwt.verify(token, process.env.JWT_KEY)
+                user = { 
+                    id: decoded.id || user.id, 
+                    username: decoded.username || user.username 
+                }
+            } catch (err) {
+                console.warn(`Invalid JWT token from IP: ${clientIp}`)
+                return next()
             }
-        })
+        }
 
         const visitorData = {
             ip: req.ip || req.headers['x-forwarded-for'] || req.socket.remoteAddress,
-            userID : userId,
-            username : username,
+            userID : user.id,
+            username : user.username,
             userAgent: req.headers['user-agent'],
             method: req.method,
             url: req.url,
@@ -101,13 +62,26 @@ router.use(async(req, res, next) => {
         // console.log('traffic data size : ', trafficData.getSize())
         // console.log('newest visitor : ', trafficData.getNewest())
 
-        saveTrafficLog(trafficData.getNewest())
+
+        res.on('finish', async () => {
+
+            try {
+
+                const { saveTrafficLog } = await import('../middleware/service/trafficLog/trafficManagement.mjs')
+                saveTrafficLog(trafficData.getNewest())
+
+            } catch (err) {
+                console.error('Error saving traffic log:', err)
+                return next()
+            }
+            
+        })
 
         next()
 
     } catch(err) {
         console.error('Error in traffic log middleware:', err)
-        next()
+        return next()
     }
     
 })

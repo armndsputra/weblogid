@@ -3,8 +3,15 @@ import jwt from 'jsonwebtoken'
 export const mainAccessAdmin = async ( req, res, next ) => {
 
     try {
-
+        
         // 1. fetch token request header
+        if (!req.header('Authorization')) {
+            return res.status(403).json({ 
+                success: false,
+                message : 'forbidden : authentication required!'
+            })
+        }
+
         const token = req.header('Authorization')?.replace('Bearer ', '')
                 
         // 2. check if token is undifind
@@ -15,16 +22,19 @@ export const mainAccessAdmin = async ( req, res, next ) => {
             })
         }
 
-        // 3. verify token jwt
+    // return
+
+        // // 3. verify token jwt
         jwt.verify(token, process.env.JWT_KEY, function (err, decoded) {
             if (err) {
                 // 3.1 if token is expired don't next to delete access
                 // console.error(err)
-                console.error('token verification failed : ', err.message)
+                // console.error('token verification failed : ', err.message)
                     return res.status(400).json({
                         success: false,
                         message : 'forbidden : access token has been expired!'
                     })
+            
             }
             // 3.2 if token active next to delete access
             console.table(decoded)
@@ -37,9 +47,8 @@ export const mainAccessAdmin = async ( req, res, next ) => {
             })
         })
 
-
     } catch (err) {
-        console.error(err)
+        // console.error(err)
         return res.status(500).json({
             success: false,
             message : 'error in access admin process!',
