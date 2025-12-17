@@ -47,6 +47,7 @@
 - [x] `POST /api/post/keywords?limit=0&offset=0` - fetch all content by keywords [GO](#fetch-all-content-by-keywords)
 - [x] `POST /api/account/register` - register user [GO](#register)
 - [x] `POST /api/account/login` - login user [GO](#login)
+- [x] `GET /api/commenter/?limit=0&offset=0` - fetch all comment [GO](guide/doc.md#fetch-all-commenter)
   
 
 

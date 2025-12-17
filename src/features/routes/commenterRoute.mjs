@@ -1,10 +1,10 @@
 import  { Router }  from 'express'
 const router = Router()
 
-import { processCommentData,  processFetchAllCommentsByPostId, processDeleteCommentData } from '../middleware/pre-processing/index.mjs'
+import { processCommentData,  processFetchAllCommentsByPostId, processDeleteCommentData, processFetchAllCommentData } from '../middleware/pre-processing/index.mjs'
 
 // controller
-import { commenter, fetchCommenterByPostId, deleteCommenter } from '../controllers/commenterController.mjs'
+import { commenter, fetchCommenterByPostId, deleteCommenter, fetchAllCommenter } from '../controllers/commenterController.mjs'
 
 import { mainAccessGuest } from '../middleware/service/mainAccessGuest.mjs'
 import { mainAccessUser } from '../middleware/service/mainAccessUser.mjs'
@@ -21,6 +21,9 @@ router.get('/:id',
 )  
 
 router.delete('/:id', mainAccessAdmin, processDeleteCommentData, deleteCommenter)
+
+// fetch all commenter 
+router.get('/', processFetchAllCommentData, fetchAllCommenter)
 
 
 export default router

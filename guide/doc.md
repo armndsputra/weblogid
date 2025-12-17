@@ -127,3 +127,26 @@
     }
 }
 ```
+
+  <br><br>
+
+  > ### Fetch All Commenter
+- **Endpoint** : `GET /api/commenter/?limit=0&offset=0`
+- [Return to the link list](../README.md#link-list-)
+  ##### Response Success : 
+
+```json
+{
+    "success": true,
+    "message": "all comments fetched successfully",
+    "comments": [
+        {
+            "id": "694259f7a473befeb8cf3bac",
+            "commenter": "69425066b235a2412428f040",
+            "content": "69424f1d83cdba82025151b5",
+            "comment": "good",
+            "createdAt": "2025-12-17T07:21:27.540Z"
+        }
+    ]
+}
+```

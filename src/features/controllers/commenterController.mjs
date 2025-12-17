@@ -94,3 +94,30 @@ export const deleteCommenter = async ( req, res ) => {
         })
     }
 }
+
+// fetch all commenter controller
+export const fetchAllCommenter = async (req, res) => {
+    try {
+
+        const comments = await Commenter.find({}).skip(req.pagination.offset).limit(req.pagination.limit).sort({ createdAt : -1 });
+
+        res.status(200).json({
+            success : true,
+            message : 'all comments fetched successfully',
+            comments : comments.map(comment => ({
+                id : comment._id,
+                commenter : comment.commenter,
+                content : comment.content,
+                comment : comment.comment,
+                createdAt : comment.createdAt
+            }))
+        });
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({
+            success: false,
+            message: 'error in fetch all commenter'
+        })
+    }
+}
