@@ -1,3 +1,5 @@
+import chalk from 'chalk'
+
 // Model
 import Post from '../models/postModel.mjs'
 
@@ -9,8 +11,14 @@ export const fetchAllContent = async ( req, res ) => {
     try {
 
         // 1. fetch all
-        const data = await Post.find().skip(req.data.offset).limit(req.data.limit).populate('user', 'id name').exec()
-        console.log(data)
+        const data = await Post.find()
+        .skip(req.data.offset)
+        .limit(req.data.limit)
+        .populate('user', 'id name')
+        .exec()
+        console.log('----------------------------------------------------------------------')
+        console.log(chalk.blueBright(`Fetch All Content Data - Count : ${data.length}`))
+        console.log('----------------------------------------------------------------------')
         // 2. print content data
         if (data) {
             return res.status(200).json({

@@ -1,8 +1,7 @@
 import  { Router }  from 'express'
 const router = Router()
-import jwt from 'jsonwebtoken'
 import chalk from 'chalk';
-
+import jwt from 'jsonwebtoken'
 import { TrafficVisitor } from '../middleware/service/trafficLog/TrafficVisitor.mjs'
 import { RateLimiter } from '../middleware/service/trafficLog/RateLimiter.mjs'
 
@@ -17,20 +16,24 @@ router.use(async(req, res, next) => {
         const clientIp = req.ip || req.socket.remoteAddress || req.headers['x-forwarded-for']
         // console.log('Client IP:', clientIp)
 
+        console.log('----------------------------------------------------------------------')
         console.log('Current rate limiter state:', rateLimiter.showRequests())
+        console.log('----------------------------------------------------------------------')
 
         // console.log(5 <= 0) // false
         // console.log(rateLimiter.check(clientIp))
         if (!rateLimiter.check(clientIp)) {
-            console.warn(chalk.red(`Rate limit exceeded for IP: ${clientIp}`))
+            console.log('----------------------------------------------------------------------')
+            console.warn(chalk.red(`Rate limit exceeded for IP : ${clientIp}`))
+            console.log('----------------------------------------------------------------------')
             // return res.status(429).json({ error: 'Too many requests. Please try again later.' })
             return next()
         }
 
         let user = { id: 'unknown', username: 'unknown' }
         const token = req.header('Authorization')?.replace('Bearer ', '')
-        
-        if (token && process.env.JWT_KEY) {
+        // console.log(token)
+        if (token) {
             try {
                 const decoded = jwt.verify(token, process.env.JWT_KEY)
                 user = { 
@@ -38,8 +41,10 @@ router.use(async(req, res, next) => {
                     username: decoded.username || user.username 
                 }
             } catch (err) {
-                console.error(chalk.red(`JWT verification failed for IP: ${clientIp}`), err.message)
+                console.log('=======================================================================')
+                console.error(chalk.red(`JWT verification failed for IP : ${clientIp}`), err.message)
                 console.warn(`Invalid JWT token from IP: ${clientIp}`)
+                console.log('=======================================================================')
             }
         }
 

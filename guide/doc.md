@@ -177,3 +177,35 @@
     ]
   }
   ```
+
+
+
+  <br><br>
+
+  > ### Fetch Statistics Mongodb
+- **Endpoint** : `GET /api/database/stats`
+- [Return to the link list](../README.md#link-list-)
+  ##### Response Success : 
+
+  ```json
+  {
+    "success": true,
+    "message": "Database statistics fetched successfully",
+    "data": {
+        "dbName": "DB_OASE",
+        "collections": 4,
+        "documents": 183,
+        "indexes": 4,
+        "indexSizeMB": 0.12890625,
+        "dataSizeMB": 0.036698341369628906,
+        "storageSizeMB": 0.13671875,
+        "avgObjSizeKB": "0.21",
+        "diskStatistics": {
+            "fsDiskUsedSizeGB": 292.68314361572266,
+            "fsDiskTotalSizeGB": 1334.8110160827637,
+            "fsDiskFreeSizeGB": 1042.127872467041
+        },
+        "ok": 1
+    }
+  }
+  ```

@@ -72,7 +72,7 @@ export const processContentData = async ( req, res, next ) => {
 
         // 5. check if the data already exists
         const title = await Post.findOne({ title : req.body.title})
-        console.table(title)
+        // console.log(title)
         if (title) { 
             // remove files
             await __file_remove(thumbnailPaths).then(result => {
@@ -89,15 +89,18 @@ export const processContentData = async ( req, res, next ) => {
         // 6. The result of the data sent to the request body
         const data = {
             user : idUser,
-            createdAt : new Date(),
             title : req.body.title,
             content : req.body.content,
-            thumbnail : thumbnailPaths[0]
+            thumbnail : thumbnailPaths[0],
+            createdAt : new Date(),
         }
 
         // 7. data has been verified
         req.data = data
+        console.log('--------------------------------------------------------------------')
+        console.log('Data has been verified : ')
         console.table(data)
+        console.log('--------------------------------------------------------------------')
         next()
 
     } catch (err) {

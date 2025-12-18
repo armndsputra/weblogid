@@ -28,7 +28,10 @@ export const mainAccessUser = async ( req, res, next ) => {
                     })
             }
             // 3.2 if token active next to delete access
+            console.log('---------------------------------------------------------------------')
+            console.log(chalk.green('Token verified successfully. Decoded payload :'));
             console.table(decoded)
+            console.log('---------------------------------------------------------------------')
             if (decoded.role === 'user') {
                 req.decoded = decoded
                 return next()
