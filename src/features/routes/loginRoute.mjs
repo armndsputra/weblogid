@@ -5,7 +5,7 @@ const router = Router()
 import { processLoginData } from '../middleware/pre-processing/index.mjs'
 
 // service 
-import { login } from '../middleware/service/login.mjs'
+import { login } from '../middleware/service/accessControl/login.mjs'
 import { loginAccess } from '../middleware/service/loginAccess.mjs'
 
 // register

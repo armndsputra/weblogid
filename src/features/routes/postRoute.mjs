@@ -11,7 +11,8 @@ import {
   deleteContent, 
   updateContent, 
   fetchContentByID,
-  fetchContentByKeywords
+  fetchContentByKeywords,
+  fetchAllContentByUserId
 } from '../controllers/postController.mjs'
 
 async function ensureUploadDir() {
@@ -58,7 +59,8 @@ import {
   processFetchAllContentData,
   processFetchContentDataByID,
   processDeleteContentData,
-  processFetchContentDataByKeywords
+  processFetchContentDataByKeywords,
+  processFetchAllContentByUserId
 } from '../middleware/pre-processing/index.mjs'
 
 // service
@@ -66,6 +68,9 @@ import { mainAccessUser } from '../middleware/service/mainAccessUser.mjs'
 
 // fetch all
 router.get('/', processFetchAllContentData, fetchAllContent)
+
+// fetch all post by user ID
+router.get('/user', mainAccessUser, processFetchAllContentByUserId, fetchAllContentByUserId)
 
 // save
 router.post('/',mainAccessUser, upload.array('thumbnail'), processContentData, saveContent)
@@ -81,6 +86,8 @@ router.get('/:id', processFetchContentDataByID, fetchContentByID)
 
 // fetch data by keywords
 router.post('/keywords', processFetchContentDataByKeywords, fetchContentByKeywords)
+
+
 
 // error handling
 router.use((err, req, res, next) => {

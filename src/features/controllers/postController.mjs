@@ -239,3 +239,40 @@ export const fetchContentByKeywords = async ( req, res, next ) => {
     }
 
 }
+
+// fetch all content by user ID
+export const fetchAllContentByUserId = async ( req, res ) => {
+    
+    try {
+
+        const userId = req.id
+
+        // 1. fetch all
+        const data = await Post.find({ user: userId }).skip(req.pagination.offset).limit(req.pagination.limit).populate('user', 'id name').exec()
+        console.log(data)
+        // 2. print content data
+        if (data) {
+            return res.status(200).json({
+                success : true,
+                message : 'success : content successfully displayed',
+                data : data.map(e => {
+                    return {
+                        id : e._id,
+                        title : e.title,
+                        content : "hidden",
+                        thubnail : e.thumbnail,
+                        createdAt : e.createdAt,
+                        author : e.user,
+                    }
+                })
+            })
+        }
+
+    } catch (err) {
+        // handle errors
+        console.error(err)
+        return res.status(500).json({
+            message : 'error in fetch all content by user ID'
+        })
+    }
+}

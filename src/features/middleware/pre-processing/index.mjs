@@ -5,6 +5,7 @@ export * from './post/processUpdateContentData.mjs'
 export * from './post/processFetchContentDataByID.mjs'
 export * from './post/processFetchContentDataByKeywords.mjs'
 export * from './post/processDeleteContentData.mjs'
+export * from './post/processFetchAllContentByUserID.mjs'
 
 // user management
 export * from './user/processRegisterData.mjs'

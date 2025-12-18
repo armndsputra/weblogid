@@ -33,9 +33,9 @@
 - [x] `POST /api/post` - post content [GO](#posting-content)
 - [x] `DELETE /api/post/id_content` - delete one content by ID [GO](#delete-one-content-by-id)
 - [x] `PATCH /api/post/id_content` - update one content by ID [GO](#update-content)
-- [ ] `GET /api/post/user` - fetch all user content 
-- [x] `GET /api/commenter/id_content/?limit=2&offset=0` - fetch all commenter by ID [GO](guide/doc.md#fetch-all-commenter-by-id)
-- [ ] `GET /api/commenter/reply` - reply commenter
+- [x] `GET /api/post/user?limit=2&offset=0` - fetch all content by user ID [GO](guide/doc.md#fetch-all-content-by-user-id) 
+- [x] `GET /api/commenter/id_content?limit=2&offset=0` - fetch all commenter by ID [GO](guide/doc.md#fetch-all-commenter-by-id)
+<!-- - [ ] `GET /api/commenter/reply` - reply commenter -->
 - [x] `PATCH /api/account/user/id_user` - update user by ID [GO](guide/doc.md#update-user-by-ID)
 
 > ***GUEST***

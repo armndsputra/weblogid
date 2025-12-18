@@ -150,3 +150,30 @@
     ]
 }
 ```
+
+  <br><br>
+
+  > ### Fetch All Content By User ID
+- **Endpoint** : `GET /api/post/user?limit=0&offset=0`
+- [Return to the link list](../README.md#link-list-)
+  ##### Response Success : 
+
+  ```json
+  {
+    "success": true,
+    "message": "success : content successfully displayed",
+    "data": [
+        {
+            "id": "69424f1d83cdba82025151b5",
+            "title": "dear god",
+            "content": "hidden",
+            "thubnail": "uploads/posts/2025-12-17T06:35:09.068Z-297274439.jpeg",
+            "createdAt": "2025-12-17T06:35:09.071Z",
+            "author": {
+                "_id": "693d0023f2c4ecadc9160542",
+                "name": "adipati bagaskara"
+            }
+        }
+    ]
+  }
+  ```

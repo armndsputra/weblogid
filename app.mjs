@@ -17,6 +17,9 @@ import commenter from './src/features/routes/commenterRoute.mjs'
 import trafficLog from './src/features/routes/trafficLogRoute.mjs'
 import traffic from './src/features/routes/trafficRoute.mjs'
 
+// database statistics
+import database from './src/features/routes/databaseStatsRoute.mjs'
+
 // middlewares  
 app.use(morgan('dev'))
 app.use(urlencoded({ extended: true }))
@@ -34,6 +37,9 @@ app.use('/api/account/login', login) // login route
 app.use('/api/account/register', register) // register route
 
 app.use('/api/traffic', traffic)
+
+// database statistics route
+app.use('/api/database/stats', database)
 
 // error handling
 app.use((req, res, next) => {
