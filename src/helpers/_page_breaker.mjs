@@ -1,5 +1,5 @@
 // pagination
-export const __page_breaker = async ( limit, offset) => {
+export const _page_breaker = async ( limit, offset) => {
 
     if (isNaN(limit) || isNaN(offset)) {
         throw new Error('NOT_NUMBER');

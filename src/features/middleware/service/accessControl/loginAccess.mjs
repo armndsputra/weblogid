@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken'
+import chalk from 'chalk'
 
 export const loginAccess = async (req, res ,next) => {
 
@@ -18,8 +19,9 @@ export const loginAccess = async (req, res ,next) => {
         jwt.verify(token, process.env.JWT_KEY, function (err, decoded) {
             if (err) {
                 // 3.1 if token is expired next to login page
-                // console.error(err)
-                console.error('token verification failed : ', err.message)
+                console.error('----------------------------------------------------------------------')
+                console.error(chalk.red('Login Page : Access token verification failed : ', err.message))
+                console.error('----------------------------------------------------------------------')
                 return next()
             }
             // 3.2 if token actice don't next to login page

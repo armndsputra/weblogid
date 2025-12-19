@@ -1,6 +1,7 @@
 // npm package manager
 import { body, validationResult } from 'express-validator'
 import bcrypt from "bcrypt"
+import chalk from 'chalk'
 
 // model
 import User from '../../../models/userModel.mjs'
@@ -9,6 +10,7 @@ export const processRegisterData = async ( req, res, next ) => {
 
     try {
 
+        // check send request body
         if ( !req.body ) {
             return res.status(400).json({
                 success : false,
@@ -16,7 +18,7 @@ export const processRegisterData = async ( req, res, next ) => {
             })
         }
 
-        // 1. fetch all data from request body
+        // fetch all data from request body
         const { name, username, confirm_password, email, password, gender, birthday } = req.body
 
         // 2.1 check the sent data and validation rules
@@ -29,19 +31,25 @@ export const processRegisterData = async ( req, res, next ) => {
                 body('birthday').notEmpty().withMessage('birthday is required!').run(req)
             ])
 
-        // 2.2 if the data does not meet the requirements, the uploaded file will be deleted
+        // if the data does not meet the requirements, the uploaded file will be deleted
         const errors = validationResult(req)
         if (!errors.isEmpty()) {
-            console.error('validation errors :', errors.array())
+            console.log('----------------------------------------------------------------------')
+            // console.error('validation errors :', errors.array())
+            console.log(chalk.red('Register Data Validation Failed : '))
+            errors.array().forEach(e => {
+                console.log('Request Body : ', chalk.red(e.msg))
+            })
+            console.log('----------------------------------------------------------------------')
             return res.status(422).json({
                     success: false,
                     message: 'validation failed!',
-                    errors: errors.array(),
+                    errors: errors.array().map(err => err.msg),
                     receivedData: req.body
             })
         }
 
-        // 3. check if the data is available in database
+        // check if the data is available in database
        const userExists = await User.findOne({$or: [{ email }, { username }]})
        if (userExists) {
             const conflictField = userExists.email === email ? 'email' : 'username';
@@ -51,7 +59,7 @@ export const processRegisterData = async ( req, res, next ) => {
             })
         }
 
-        // 3.1 check confirmation password
+        // check confirmation password
         if ( password !== confirm_password) {
             return res.status(202).json({ 
                 success: false,
@@ -59,11 +67,11 @@ export const processRegisterData = async ( req, res, next ) => {
             })
         }
 
-        // 4. hash password
+        // hash password
         const saltRoundes = 12
         const hashedPassword = await bcrypt.hash(password, saltRoundes)
 
-        // 5. data has been verified
+        // data has been verified
         const processRegisterData = { 
             name : name.trim(), 
             username: username.trim(), 
@@ -76,7 +84,7 @@ export const processRegisterData = async ( req, res, next ) => {
             role : 'guest'
         }
 
-        // 6. pass the verified data to the next middleware
+        // pass the verified data to the next middleware
         req.processRegisterData = processRegisterData
         next()
 

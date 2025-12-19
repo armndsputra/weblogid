@@ -4,7 +4,7 @@ import mongoose from "mongoose"
 import Post from '../../../models/postModel.mjs'
 
 // helper
-import { __file_remove } from "../../../../helpers/__file_remove.mjs"
+import { _file_remove } from "../../../../helpers/_file_remove.mjs"
 
 export const processDeleteContentData = async ( req, res, next ) => {
 
@@ -33,7 +33,7 @@ export const processDeleteContentData = async ( req, res, next ) => {
         // 3. delete file
         let filePaths = []
         filePaths.push(result.thumbnail)
-        await __file_remove(filePaths).then(result => {
+        await _file_remove(filePaths).then(result => {
                 console.log('operation result :', result)
             }).catch(error => {
                 console.error('operation failed :', error)

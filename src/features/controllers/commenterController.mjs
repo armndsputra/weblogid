@@ -1,3 +1,4 @@
+import chalk from 'chalk'
 import Commenter from '../models/commenterModel.mjs'
 
 // controller to handle adding a comment
@@ -5,7 +6,11 @@ export const commenter = async (req, res) => {
     try {
 
         const data = req.processCommentData
-        console.log(data)
+        console.log('------------------------Data to be saved as comment : --------------------')
+        console.log('ID of Content/Post     : ', data.content)
+        console.log('Commenter/User ID      : ', data.commenter)
+        console.log('Comment                : ', data.comment)
+        console.log('---------------------------------------------------------------------------') 
         const result = new Commenter(data)
         const savedCommenter = await result.save()
 
@@ -36,7 +41,14 @@ export const fetchCommenterByPostId = async (req, res) => {
     try {
         const postId = req.data;
 
-        const comments = await Commenter.find({ content : postId }).skip(req.pagination.offset).limit(req.pagination.limit).sort({ createdAt : -1 });   
+        const comments = await Commenter.find({ content : postId })
+        .skip(req.pagination.offset)
+        .limit(req.pagination.limit)
+        .sort({ createdAt : -1 });
+
+        console.log('----- Fetched Comments for Post ID : ', postId, "--------")
+        console.log('Comments Count : ', chalk.greenBright(comments.length))
+        console.log('---------------------------------------------------------------------------')
 
         res.status(200).json({
             success : true,

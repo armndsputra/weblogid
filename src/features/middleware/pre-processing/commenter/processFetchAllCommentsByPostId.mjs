@@ -1,7 +1,8 @@
 import mongoose from 'mongoose';
 
 import Post from '../../../models/postModel.mjs';
-import { __page_breaker } from '../../../../helpers/__page_breaker.mjs'
+import { _page_breaker } from '../../../../helpers/_page_breaker.mjs'
+import chalk from 'chalk';
 
 export const processFetchAllCommentsByPostId = async (req, res, next) => {
 
@@ -26,11 +27,14 @@ export const processFetchAllCommentsByPostId = async (req, res, next) => {
             message : 'incorrect ID entered!'
         })
 
-        // cek value query
-        const pagination = await __page_breaker( limit, offset )
-
         // Check if post exists and belongs to the user
         const post = await Post.findById(postId);
+        if (!post) {
+            return res.status(404).json({ 
+                success: false,
+                message : 'Post not found' 
+            });
+        }
 
         // ACCESS USER MUST BE THE OWNER OF THE POST TO VIEW COMMENTS
         if (post.user.toString() !== userId) {
@@ -40,6 +44,11 @@ export const processFetchAllCommentsByPostId = async (req, res, next) => {
             });
         }
 
+        // cek value query
+        const pagination = await _page_breaker( limit, offset )
+
+        // return
+
         // NEXT MIDDLEWARE
         req.data = postId
         req.pagination = pagination
@@ -47,7 +56,8 @@ export const processFetchAllCommentsByPostId = async (req, res, next) => {
 
 
     } catch (err) {
-        console.error(err)
+        // console.error(err)
+        console.error(chalk.redBright(err));
         if (err.message === 'NOT_NUMBER' || 'NEGATIVE_VALUES_NOT_ALLOWED') {
             return res.status(400).json({
                 success : false,

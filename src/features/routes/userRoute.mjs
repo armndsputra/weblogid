@@ -5,7 +5,13 @@ import fs from 'fs'
 import path from 'path'
 
 // controllers
-import { fetchAllUser, deleteUser, updateUser, fetchUserByID, updateUserRole } from '../controllers/userController.mjs'
+import { 
+  fetchAllUser,
+  deleteUser, 
+  updateUser, 
+  fetchUserByID, 
+  updateUserRole 
+} from '../controllers/userController.mjs'
 
 // middleware
 import { 

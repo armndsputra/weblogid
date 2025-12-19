@@ -23,9 +23,9 @@ router.use(async(req, res, next) => {
         // console.log(5 <= 0) // false
         // console.log(rateLimiter.check(clientIp))
         if (!rateLimiter.check(clientIp)) {
-            console.log('----------------------------------------------------------------------')
+            console.log('------------------------------------------------------------------------')
             console.warn(chalk.red(`Rate limit exceeded for IP : ${clientIp}`))
-            console.log('----------------------------------------------------------------------')
+            console.log('------------------------------------------------------------------------')
             // return res.status(429).json({ error: 'Too many requests. Please try again later.' })
             return next()
         }

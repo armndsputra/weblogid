@@ -1,7 +1,7 @@
-import { unlink } from 'node:fs/promises';
-import chalk from 'chalk';
+import { unlink } from 'node:fs/promises'
+import chalk from 'chalk'
 
-export const __file_remove = async (filePaths) => {
+export const _file_remove = async (filePaths) => {
 
     // check whether the parameter sent is an array or not
     if (!Array.isArray(filePaths)) {

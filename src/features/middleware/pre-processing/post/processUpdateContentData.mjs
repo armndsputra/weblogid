@@ -1,7 +1,7 @@
 import mongoose from "mongoose"
 
 // helper
-import { __file_remove } from "../../../../helpers/__file_remove.mjs"
+import { _file_remove } from "../../../../helpers/_file_remove.mjs"
 
 // model
 import Post from '../../../models/postModel.mjs'
@@ -28,7 +28,7 @@ export const processUpdateContentData = async ( req, res, next ) => {
         // 2. validasi ID
         if (!mongoose.Types.ObjectId.isValid(id)) {
             // remove files
-            await __file_remove(thumbnailPaths).then(result => {
+            await _file_remove(thumbnailPaths).then(result => {
                     console.log('operation result:', result)
                 }).catch(error => {
                     console.error('operation failed:', error)
@@ -45,7 +45,7 @@ export const processUpdateContentData = async ( req, res, next ) => {
         const result = await Post.findById(id)
         if (!result) {
             // remove files
-            await __file_remove(thumbnailPaths).then(result => {
+            await _file_remove(thumbnailPaths).then(result => {
                     console.log('operation result:', result)
                 }).catch(error => {
                     console.error('operation failed:', error)
@@ -60,7 +60,7 @@ export const processUpdateContentData = async ( req, res, next ) => {
         // MAIN ACCESS USER
         if (req.decoded.id !== result.user.toString()) {
             // remove files
-            await __file_remove(thumbnailPaths).then(result => {
+            await _file_remove(thumbnailPaths).then(result => {
                     console.log('operation result:', result)
                 }).catch(error => {
                     console.error('operation failed:', error)
@@ -74,7 +74,7 @@ export const processUpdateContentData = async ( req, res, next ) => {
         // 5. validate thumbnail file count
         if (thumbnailPaths.length > 1) {
             // remove files
-            await __file_remove(thumbnailPaths).then(result => {
+            await _file_remove(thumbnailPaths).then(result => {
                     console.log('operation result:', result)
                 }).catch(error => {
                     console.error('operation failed:', error)
@@ -92,7 +92,7 @@ export const processUpdateContentData = async ( req, res, next ) => {
             // remove old path thumbnail and update new path thumbnail
             finalThumbnailPath = thumbnailPaths[0]
             // remove files
-            await __file_remove([oldThumbnailPath]).then(result => {
+            await _file_remove([oldThumbnailPath]).then(result => {
                     console.log('operation result:', result)
                 }).catch(error => {
                     console.error('operation failed:', error)

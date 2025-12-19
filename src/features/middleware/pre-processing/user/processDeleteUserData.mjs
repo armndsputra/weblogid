@@ -1,9 +1,10 @@
 import mongoose from "mongoose";
 
+// model
 import User from '../../../models/userModel.mjs'
 
 // helper
-import { __file_remove } from "../../../../helpers/__file_remove.mjs"
+import { _file_remove } from "../../../../helpers/_file_remove.mjs"
 
 export const processDeleteUserData = async ( req, res, next ) => {
 
@@ -12,13 +13,13 @@ export const processDeleteUserData = async ( req, res, next ) => {
         const { role } = req.decoded
         const id = req.params.id
 
-        // 1. check id valid or not
+        // check id valid or not
         if (!mongoose.Types.ObjectId.isValid(id)) return res.status(400).json({ 
             success: false,
             message : 'incorrect ID entered!'
         })
 
-        // 2. Check if data exists
+        // Check if data exists
         const user = await User.findById(id)
         if (!user) return res.status(404).json({ 
             success: false,
@@ -33,14 +34,14 @@ export const processDeleteUserData = async ( req, res, next ) => {
             })
         }
 
-        // 3. remove old avatar path / file
-        await __file_remove([user.avatar]).then(result => {
+        // remove old avatar path / file
+        await _file_remove([user.avatar]).then(result => {
                         console.log('operation result:', result)
         }).catch(error => {
             console.error('operation failed:', error)
         })
         
-        // 4. data has been verified adn next process
+        // data has been verified adn next process
         req.processUserData = user
         next()
 

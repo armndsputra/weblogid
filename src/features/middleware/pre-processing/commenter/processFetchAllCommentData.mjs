@@ -1,4 +1,4 @@
-import { __page_breaker } from "../../../../helpers/__page_breaker.mjs";
+import { _page_breaker } from "../../../../helpers/_page_breaker.mjs";
 
 export const processFetchAllCommentData = async(req, res, next) => {
 
@@ -6,7 +6,7 @@ export const processFetchAllCommentData = async(req, res, next) => {
 
         const { limit,  offset } = req.query;
 
-        const pagination = await __page_breaker(offset, limit);
+        const pagination = await _page_breaker(offset, limit);
 
         req.pagination = pagination;
         next()

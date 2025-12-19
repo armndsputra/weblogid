@@ -6,7 +6,7 @@ export const processFetchUserDataByID = async ( req, res, next ) => {
 
     try {
 
-        // 1. check id valid or not
+        // check id valid or not
         if (!mongoose.Types.ObjectId.isValid(id)) return res.status(400).json({ 
             success : false,
             message : 'incorrect ID entered!'

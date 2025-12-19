@@ -1,4 +1,4 @@
-import { __page_breaker } from "../../../../helpers/__page_breaker.mjs"
+import { _page_breaker } from "../../../../helpers/_page_breaker.mjs"
 
 export const processFetchAllContentByUserId = async (req, res, next) => {
 
@@ -7,7 +7,7 @@ export const processFetchAllContentByUserId = async (req, res, next) => {
 
         const { limit, offset } = req.query
 
-        const pagination = await __page_breaker(limit, offset)
+        const pagination = await _page_breaker(limit, offset)
  
         const { id } = req.decoded
         req.pagination = pagination

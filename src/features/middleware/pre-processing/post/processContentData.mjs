@@ -2,7 +2,7 @@
 import { body, validationResult } from 'express-validator'
 
 // helper
-import { __file_remove } from "../../../../helpers/__file_remove.mjs"
+import { _file_remove } from "../../../../helpers/_file_remove.mjs"
 
 // model
 import Post from '../../../models/postModel.mjs'
@@ -31,7 +31,7 @@ export const processContentData = async ( req, res, next ) => {
         const errors = validationResult(req)
         if (!errors.isEmpty()) {
             // remove files
-            await __file_remove(thumbnailPaths).then(result => {
+            await _file_remove(thumbnailPaths).then(result => {
                     console.log('operation result:', result)
                 }).catch(error => {
                     console.error('operation failed:', error)
@@ -50,7 +50,7 @@ export const processContentData = async ( req, res, next ) => {
         // 3. if file path > 0 have to remove
         if (thumbnailPaths.length > 1) {
             // remove files
-            await __file_remove(thumbnailPaths).then(result => {
+            await _file_remove(thumbnailPaths).then(result => {
                     console.log('Operation result:', result)
                 }).catch(error => {
                     console.error('Operation failed:', error)
@@ -75,7 +75,7 @@ export const processContentData = async ( req, res, next ) => {
         // console.log(title)
         if (title) { 
             // remove files
-            await __file_remove(thumbnailPaths).then(result => {
+            await _file_remove(thumbnailPaths).then(result => {
                     console.log('operation result:', result)
                 }).catch(error => {
                     console.error('operation failed:', error)

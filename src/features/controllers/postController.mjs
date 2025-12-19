@@ -16,9 +16,9 @@ export const fetchAllContent = async ( req, res ) => {
         .limit(req.data.limit)
         .populate('user', 'id name')
         .exec()
-        console.log('----------------------------------------------------------------------')
+        console.log('-------------------- Fetch All Content  -------------------------------')
         console.log(chalk.blueBright(`Fetch All Content Data - Count : ${data.length}`))
-        console.log('----------------------------------------------------------------------')
+        console.log('------------------------------------------------------------------------')
         // 2. print content data
         if (data) {
             return res.status(200).json({

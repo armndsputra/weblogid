@@ -1,3 +1,5 @@
+import chalk from 'chalk'
+
 // model
 import Users from '../models/userModel.mjs'
 
@@ -53,10 +55,14 @@ export const fetchAllUser = async ( req, res ) => {
 
         const { limit, offset } = req.pagination
     
-        // 1. fetch all
+        // fetch all
         const data = await Users.find().skip(offset).limit(limit).exec()
+
+        console.log('----------------------- Fetch All User ---------------------------')
+        console.log(chalk.blueBright(`Fetch All User Data - Count : ${data.length}`))
+        console.log('---------------------------------------------------------------')
     
-        // 2. print results
+        // print data
         if (data) {
             return res.status(200).json({
                 success : true,
@@ -98,7 +104,9 @@ export const deleteUser =  async ( req, res ) => {
 
         // 1. delete user by ID
         const data = await Users.findByIdAndDelete(id)
+        console.log('------------------------ Deleted User ---------------------------------')
         console.log(data)
+        console.log('-----------------------------------------------------------------------')
 
         // 2. print user data
         if (data) {
@@ -172,7 +180,9 @@ export const fetchUserByID = async ( req, res ) => {
 
         // 1. fetch data by ID
         const data = await Users.findById({_id : id}).exec()
+        console.log('------------------------ Detail User ----------------------------------')
         console.log(data)
+        console.log('-----------------------------------------------------------------------')
 
         // 2. print data
         if (data) return res.status(200).json({

@@ -1,5 +1,6 @@
 // npm package manager
 import { body, validationResult } from 'express-validator'
+import chalk from 'chalk'
 
 // model
 import Users from '../../../models/userModel.mjs'
@@ -8,7 +9,7 @@ export const processLoginData = async ( req, res, next ) => {
 
     try {
 
-        // 1. check send request body
+        // check send request body
         if (!req.body || Object.keys(req.body).length === 0) {
             return res.status(400).json({ 
                 success: false,
@@ -16,28 +17,34 @@ export const processLoginData = async ( req, res, next ) => {
             })
         }
 
-        // 2. fetch all data
+        // fetch all data
         const { email, password } = req.body
 
-        // 3.1 check the sent data and validation rules
+        // check the sent data and validation rules
         await Promise.all([
                 body('email').notEmpty().withMessage('email is required!').run(req),
                 body('password').notEmpty().withMessage('password is required!').run(req),
             ])
 
-        // 3.2 if the data does not meet the requirements, the uploaded file will be deleted
+        // if the data does not meet the requirements, the uploaded file will be deleted
         const errors = validationResult(req)
         if (!errors.isEmpty()) {
-            console.error('validation errors :', errors.array())
+            console.log('----------------------------------------------------------------------')
+            // console.error('validation errors :', errors.array())
+            console.log(chalk.red('Login Data Validation Failed : '))
+            errors.array().forEach(e => {
+                console.log('Request Body : ', chalk.red(e.msg))
+            })
+            console.log('----------------------------------------------------------------------')
             return res.status(422).json({
                     success: false,
                     message: 'validation failed!',
-                    errors: errors.array(),
+                    errors: errors.array().map(err => err.msg),
                     receivedData: req.body
             });
         }
 
-        // 4. check account exists
+        // check account exists
         const user = await Users.findOne({ email }).exec()
         if (!user) {
             return res.status(400).json({
@@ -46,7 +53,16 @@ export const processLoginData = async ( req, res, next ) => {
             })
         }
 
-        // 5. data has been verified
+        console.log('----------------------------------------------------------------------')
+        console.log(chalk.green('Login Data Validation Successful : '))
+        console.log('User Found : ')
+        console.log(`- ID       : ${user._id.toString()}`)
+        console.log(`- Username : ${user.username}`)
+        console.log(`- Email    : ${user.email}`)
+        console.log(`- Role     : ${user.role}`)
+        console.log('----------------------------------------------------------------------')
+
+        // data has been verified
         const processLoginData = {
             id : user._id.toString(),
             username : user.username,
@@ -55,7 +71,7 @@ export const processLoginData = async ( req, res, next ) => {
             tempPassword : password
         }
 
-        // 6. pass the verified data to the next middleware
+        // pass the verified data to the next middleware
         req.processLoginData = processLoginData
         next()
 
