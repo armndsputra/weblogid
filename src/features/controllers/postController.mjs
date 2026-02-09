@@ -29,7 +29,7 @@ export const fetchAllContent = async ( req, res ) => {
                         id : e._id,
                         title : e.title,
                         content : "hidden",
-                        thubnail : e.thumbnail,
+                        thumbnail : e.thumbnail,
                         createdAt : e.createdAt,
                         author : e.user,
                     }

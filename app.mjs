@@ -7,6 +7,13 @@ const {urlencoded , json} = pkg
 import 'dotenv/config'
 import chalk from 'chalk'
 
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+// Get __dirname in ES module
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 // -------------------------- ROUTES IMPORTS --------------------------
 // routes
 import post from'./src/features/routes/postRoute.mjs'
@@ -24,9 +31,16 @@ import traffic from './src/features/routes/trafficRoute.mjs'
 // database statistics
 import database from './src/features/routes/databaseStatsRoute.mjs'
 
+// cors
+import cors from './src/features/routes/corsRoute.mjs'
+
 // -------------------------- END OF ROUTES IMPORTS --------------------------
 
 // middlewares  
+app.use(cors)
+
+app.use(express.static(path.join(__dirname, 'public')));
+
 app.use(morgan('dev'))
 app.use(urlencoded({ extended: true }))
 app.use(json())
