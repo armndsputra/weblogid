@@ -51,7 +51,7 @@ export const processRegisterData = async ( req, res, next ) => {
 
         // check if the data is available in database
        const userExists = await User.findOne({$or: [{ email }, { username }]})
-       console.log(userExists)
+       console.log("ini data sama :" + userExists)
        if (userExists) {
             const conflictField = userExists.email === email ? 'email' : 'username';
             return res.status(409).json({ 
