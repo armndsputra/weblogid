@@ -1,4 +1,4 @@
-# `WEBLOGID`
+# `W E B L O G I D`
 *Weblogid ( Website Blog Indonesia ). depiction of a small framework used to create a simple weblog*
 
 | Layer | Technology |
