@@ -1,6 +1,6 @@
 import cors from 'cors'
 
-const allowedDomain = ['http://localhost:3000', 'http://calonmantu.sbs/', 'https://calonmantu.sbs/']
+const allowedDomain = ['http://localhost:3000', 'http://calonmantu.sbs/', 'https://calonmantu.sbs/', '202.10.44.121:80']
 
 const Options = {
     origin: function (origin, callback) {
