@@ -1,4 +1,3 @@
-  GNU nano 7.2                                                                        .env
 # SERVER
 PORT=3000
 
@@ -7,7 +6,8 @@ PORT=3000
 #MONGODB_URL=mongodb+srv://admin:<db_password>@cluster0-restfull-api.gmcfp.mongodb.net/calonmantu?appName=Cluster0-restfull-api
 MONGODB_URL=mongodb+srv://admin:admin1234@cluster0-restfull-api.gmcfp.mongodb.net/calonmantu?authSource=admin&appName=Cluster0-restfull-api
 
-
 # JWT
 JWT_KEY=oase
 JWT_EXPIRES=1h
+
+pm2 start npm --name "server" -- start
