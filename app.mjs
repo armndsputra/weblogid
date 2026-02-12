@@ -8,6 +8,7 @@ import 'dotenv/config'
 import chalk from 'chalk'
 
 import path from 'path';
+// import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
 
 // Get __dirname in ES module
@@ -39,7 +40,8 @@ import cors from './src/features/routes/corsRoute.mjs'
 // middlewares  
 app.use(cors)
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public', 'dist')));
+app.use(express.static(path.join(__dirname, 'public', )));
 
 app.use(morgan('dev'))
 app.use(urlencoded({ extended: true }))
@@ -77,9 +79,11 @@ app.use((req, res, next) => {
     if (req.path.match(/\.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot)$/)) {
         return next();
     }
+
+    // console.log(__dirname)
     
     // Send React index.html
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+   res.sendFile(path.join(__dirname, 'public', 'dist', 'index.html'));
 })
 
 // error handling

@@ -1,6 +1,6 @@
 import cors from 'cors'
 
-const allowedDomain = ['http://localhost:5173'];
+const allowedDomain = ['http://localhost:3000']
 
 const Options = {
     origin: function (origin, callback) {
@@ -11,7 +11,7 @@ const Options = {
         
         // Block null origin dari direct browser access
         if (origin === 'null' || origin === null) {
-        return callback(new Error('Direct browser access not allowed'), false);
+        return callback(new Error('Direct browser access not allowed'), false)
         }
         
         if (allowedDomain.includes(origin)) {
