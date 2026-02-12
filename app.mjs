@@ -56,7 +56,7 @@ app.use('/api/commenter', commenter) // commenter route
 
 app.use('/api/account/user', user) // user route
 app.use('/api/account/login', login) // login route
-app.use('/api/account/register', register) // register route
+// app.use('/api/account/register', register) // register route
 
 app.use('/api/traffic', traffic)
 
