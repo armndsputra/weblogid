@@ -63,6 +63,25 @@ app.use('/api/traffic', traffic)
 // database statistics route
 app.use('/api/database/stats', database)
 
+// static route to index.html
+app.use((req, res, next) => {
+    console.log('-------------------------------------------------------')
+    console.log("Path URL: " + req.path)
+    console.log('-------------------------------------------------------')
+    // Skip API routes
+    if (req.path.startsWith('/api')) {
+        return next();
+    }
+    
+    // Skip static files (sudah di-handle express.static)
+    if (req.path.match(/\.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot)$/)) {
+        return next();
+    }
+    
+    // Send React index.html
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+})
+
 // error handling
 app.use((req, res, next) => {
     const error = new Error('the page you are looking for was not found')
