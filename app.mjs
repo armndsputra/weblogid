@@ -83,7 +83,7 @@ app.use((req, res, next) => {
     // console.log(__dirname)
     
     // Send React index.html
-   res.sendFile(path.join(__dirname, 'public', 'dist', '404.html'));
+   res.sendFile(path.join(__dirname, 'public', 'dist', 'index.html'));
 })
 
 // error handling
