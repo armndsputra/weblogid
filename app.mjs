@@ -38,7 +38,7 @@ import cors from './src/features/routes/corsRoute.mjs'
 // -------------------------- END OF ROUTES IMPORTS --------------------------
 
 // middlewares  
-app.use(cors)
+// app.use(cors)
 
 app.use(express.static(path.join(__dirname, 'public', 'dist')));
 app.use(express.static(path.join(__dirname, 'public', )));
@@ -83,7 +83,7 @@ app.use((req, res, next) => {
     // console.log(__dirname)
     
     // Send React index.html
-   res.sendFile(path.join(__dirname, 'public', 'dist', 'index.html'));
+   res.sendFile(path.join(__dirname, 'public', 'dist', '404.html'));
 })
 
 // error handling
