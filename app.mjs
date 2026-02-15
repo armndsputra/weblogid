@@ -40,7 +40,9 @@ import cors from './src/features/routes/corsRoute.mjs'
 // middlewares  
 app.use(cors)
 
-app.use(express.static(path.join(__dirname, 'public', 'dist')));
+// app.use(express.static(path.join(__dirname, 'public', 'dist')));
+app.use(express.static(path.join(__dirname, 'public', 'dist'), { 
+    fallthrough: false  })); // add fallthrough: false to prevent next() being called for static files not found
 app.use(express.static(path.join(__dirname, 'public', )));
 
 app.use(morgan('dev'))
