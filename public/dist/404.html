@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 · page not found</title>
+    <style>
+        /* reset & base — clean white, minimal */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #ffffff;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: #1e1e1e;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+        }
+
+        .container {
+            max-width: 680px;
+            width: 100%;
+            text-align: center;
+            background: #ffffff;
+            border-radius: 32px;
+            padding: 2.5rem 2rem;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.02), 0 0 0 1px rgba(0, 0, 0, 0.02);
+        }
+
+        /* big 404 figure, light weight, elegant */
+        .error-code {
+            font-size: clamp(6rem, 20vw, 11rem);
+            font-weight: 500;
+            line-height: 1;
+            color: #111111;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 0 rgba(0,0,0,0.02);
+        }
+
+        /* main heading */
+        .message {
+            font-size: 1.8rem;
+            font-weight: 400;
+            color: #2b2b2b;
+            margin-bottom: 0.75rem;
+        }
+
+        .description {
+            font-size: 1.1rem;
+            color: #5a5a5a;
+            max-width: 450px;
+            margin: 0 auto 2.2rem auto;
+            font-weight: 350;
+        }
+
+        /* subtle divider */
+        .divider {
+            width: 80px;
+            height: 2px;
+            background: #eaeaea;
+            margin: 1.8rem auto 2rem auto;
+            border-radius: 2px;
+        }
+
+        /* white button with soft border */
+        .home-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.9rem 2.2rem;
+            background-color: #ffffff;
+            color: #1a1a1a;
+            text-decoration: none;
+            font-weight: 470;
+            font-size: 1.1rem;
+            border-radius: 60px;
+            border: 1.5px solid #d4d4d4;
+            transition: all 0.2s ease;
+            gap: 0.4rem;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.00);
+        }
+
+        .home-link:hover {
+            background-color: #fafafa;
+            border-color: #a0a0a0;
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.02);
+            transform: scale(1.02);
+        }
+
+        .home-link:active {
+            background-color: #f0f0f0;
+            transform: scale(0.98);
+        }
+
+        /* small arrow icon */
+        .arrow {
+            font-size: 1.3rem;
+            line-height: 1;
+            transition: transform 0.2s;
+        }
+
+        .home-link:hover .arrow {
+            transform: translateX(4px);
+        }
+
+        /* tiny footer note */
+        .small-note {
+            margin-top: 2.5rem;
+            font-size: 0.9rem;
+            color: #9f9f9f;
+            border-top: 1px solid #f0f0f0;
+            padding-top: 1.5rem;
+        }
+
+        .small-note a {
+            color: #5a5a5a;
+            text-decoration: none;
+            border-bottom: 1px dotted #c0c0c0;
+        }
+
+        .small-note a:hover {
+            color: #000000;
+            border-bottom-color: #888;
+        }
+
+        /* selection stays subtle */
+        ::selection {
+            background: #d9d9d9;
+            color: #000000;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- large 404 -->
+        <div class="error-code">404</div>
+
+        <!-- english heading & description -->
+        <h1 class="message">Page Not Found</h1>
+        <p class="description">
+            The page you're looking for might have been moved, renamed,<br>or never existed in the first place.
+        </p>
+
+        <!-- thin divider -->
+        <div class="divider"></div>
+
+       
+        <!-- extra options: help / search (still minimal) -->
+        <div class="small-note">
+            back to <a href="/">home</a> or try searching for something else.
+        </div>
+    </div>
+
+    <!-- 
+        no javascript, no complexity.
+        white theme, one file html+css — now in english.
+    -->
+</body>
+</html>
