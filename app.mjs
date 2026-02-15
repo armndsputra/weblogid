@@ -38,7 +38,7 @@ import cors from './src/features/routes/corsRoute.mjs'
 // -------------------------- END OF ROUTES IMPORTS --------------------------
 
 // middlewares  
-// app.use(cors)
+app.use(cors)
 
 app.use(express.static(path.join(__dirname, 'public', 'dist')));
 app.use(express.static(path.join(__dirname, 'public', )));
@@ -58,7 +58,7 @@ app.use('/api/commenter', commenter) // commenter route
 
 app.use('/api/account/user', user) // user route
 app.use('/api/account/login', login) // login route
-// app.use('/api/account/register', register) // register route
+app.use('/api/account/register', register) // register route
 
 app.use('/api/traffic', traffic)
 

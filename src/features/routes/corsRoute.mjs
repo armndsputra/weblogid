@@ -1,6 +1,6 @@
 import cors from 'cors'
 
-const allowedDomain = ['http://localhost:3000']
+const allowedDomain = ['http://localhost:5173', 'http://localhost:3000', 'http://localhost:8080']
 
 const Options = {
     origin: function (origin, callback) {
