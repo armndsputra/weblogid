@@ -57,13 +57,15 @@
 1. > npm install
 2. > create a file with name .env
    ```
-    #server
-    PORT='3000'
-    #DATABASE MONGODB URL
-    MONGODB_URL = ''
+    # SERVER
+    PORT = 3000
 
-    #JSON Web Token (JWT) Key
-    JWT_KEY = ''
+    # DATABASE MONGODB
+    MONGODB_URL = 'mongodb://localhost:27017/'
+
+    # JWT
+    JWT_KEY = 'rahasia'
+    JWT_EXPIRES = '1h'
    ```
   
 3. > npm start

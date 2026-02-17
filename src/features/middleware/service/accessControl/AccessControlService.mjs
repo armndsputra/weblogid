@@ -18,6 +18,11 @@ export class AccessControlService {
                     success: false,
                     message : 'forbidden : authentication required!'
                     })
+                } else if (!req.header('Authorization').startsWith('Bearer ')) {
+                    return res.status(403).json({ 
+                        success: false,
+                        message : 'forbidden : invalid authentication scheme!'
+                    })
                 }
 
                 const token = req.header('Authorization')?.replace('Bearer ', '')
