@@ -19,15 +19,21 @@ export const processRegisterData = async ( req, res, next ) => {
         }
 
         // fetch all data from request body
-        const { name, username, confirm_password, email, password, gender, birthday } = req.body
+        const { 
+            name, 
+            username,
+            confirm_password, 
+            email, password, 
+            gender, birthday 
+            } = req.body
 
         // 2.1 check the sent data and validation rules
         await Promise.all([
                 body('name').notEmpty().withMessage('name is required!').run(req),
-                body('username').notEmpty().withMessage('username is required!').run(req),
-                body('email').notEmpty().withMessage('email is required!').run(req),
+                body('username').notEmpty().trim().withMessage('username is required!').run(req),
+                body('email').notEmpty().trim().isEmail().withMessage('invalid email format!').normalizeEmail().run(req),
                 body('password').notEmpty().withMessage('password is required!').run(req),
-                body('confirm_password').notEmpty().withMessage('birthday is required!').run(req),
+                body('confirm_password').notEmpty().withMessage('confirm password is required!').run(req),
                 body('birthday').notEmpty().withMessage('birthday is required!').run(req)
             ])
 
@@ -49,11 +55,14 @@ export const processRegisterData = async ( req, res, next ) => {
             })
         }
 
+        const cleanUsername = username.replace(/^\s+/, '')
+        const cleanEmail = email.replace(/^\s+/, '')    
+
         // check if the data is available in database
-       const userExists = await User.findOne({$or: [{ email }, { username }]})
+       const userExists = await User.findOne({$or: [{ email: cleanEmail }, { username: cleanUsername }]})
        console.log("ini data sama :" + userExists)
        if (userExists) {
-            const conflictField = userExists.email === email ? 'email' : 'username';
+            const conflictField = userExists.email === cleanEmail ? 'email' : 'username';
             return res.status(409).json({ 
                 success: false,
                 message: `${conflictField} already registered!` 
