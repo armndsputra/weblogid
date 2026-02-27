@@ -16,6 +16,10 @@ export const fetchAllContent = async ( req, res ) => {
         .limit(req.data.limit)
         .populate('user', 'id name')
         .exec()
+
+       const total = await Post.countDocuments()
+
+        // console.log(total.length)
         console.log('-------------------- Fetch All Content  -------------------------------')
         console.log(chalk.blueBright(`Fetch All Content Data - Count : ${data.length}`))
         console.log('------------------------------------------------------------------------')
@@ -23,7 +27,7 @@ export const fetchAllContent = async ( req, res ) => {
         if (data) {
             return res.status(200).json({
                 success : true,
-                total : data.length,
+                total : total,
                 message : 'success : content successfully displayed',
                 data : data.map(e => {
                     return {
