@@ -306,6 +306,7 @@
 ```json
 {
     "success": true,
+    "total": 1,
     "message": "success : content successfully displayed",
     "data": [
         {
